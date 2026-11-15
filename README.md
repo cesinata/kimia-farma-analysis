@@ -1,6 +1,8 @@
 # Kimia Farma sales analysis
 
-As a Big Data Analyst intern in a virtual Data Science internship by Rakamin, in collaboration with Kimia Farma, I worked through the program's sales sample from raw tables to SQL aggregates and an interactive dashboard.
+As a Big Data Analyst intern in a virtual Data Science internship by Rakamin, in collaboration with Kimia Farma, I worked through the program sales sample from raw tables to SQL aggregates and an interactive dashboard.
+
+The charts below use the sample dataset provided for that internship program.
 
 Live dashboard: [cesinata.github.io/kimia-farma-analysis/dashboard](https://cesinata.github.io/kimia-farma-analysis/dashboard/index.html)
 
