@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Original internship dashboard · Kimia Farma</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23ffc107'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='11' font-family='Arial' font-weight='700' fill='%231c4173'%3EKF%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="previous.css">
+  <script src="data.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-row">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">KF</div>
+        <div>
+          <p class="eyebrow">Original internship layout</p>
+          <h1>Sales Dashboard</h1>
+        </div>
+      </div>
+      <a class="ghost" href="index.html">Back to rebuilt dashboard</a>
+    </div>
+    <div class="wrap note">
+      <p>This page follows the structure of the Data Studio report from the Rakamin × Kimia Farma virtual internship. Layout and labels are cleaned up slightly for readability. Dates and invoice totals use the corrected rebuild.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="kpis" aria-label="Totals">
+      <article>
+        <h2>Total sales revenue (IDR)</h2>
+        <p id="kpi-revenue">–</p>
+      </article>
+      <article>
+        <h2>Number of invoices</h2>
+        <p id="kpi-invoices">–</p>
+      </article>
+      <article>
+        <h2>Number of purchases</h2>
+        <p id="kpi-lines">–</p>
+      </article>
+      <article>
+        <h2>Number of products sold</h2>
+        <p id="kpi-units">–</p>
+      </article>
+    </section>
+
+    <div class="board">
+      <section class="panel">
+        <h2>How are the sales trending?</h2>
+        <div class="trend" id="trend"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Which customer has the most purchases?</h2>
+        <div class="bars" id="customers"></div>
+      </section>
+
+      <section class="panel">
+        <h2>What is our top product?</h2>
+        <div class="bars" id="products"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Which transaction has the highest number of products purchased?</h2>
+        <div class="table-wrap" id="invoices"></div>
+      </section>
+
+      <section class="panel panel-pack">
+        <h2>Products sold by unit</h2>
+        <div class="mix">
+          <div class="donut-wrap">
+            <svg id="donut" viewBox="0 0 160 160" role="img" aria-label="Products sold by unit"></svg>
+          </div>
+          <ul class="legend" id="legend"></ul>
+        </div>
+      </section>
+
+      <section class="panel panel-wide">
+        <h2>Total revenue of each customer</h2>
+        <div class="table-wrap" id="customers-table"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="wrap foot">
+    <p>Corrected dates and full invoice set from the portfolio rebuild. <a href="index.html">Open the rebuilt dashboard</a></p>
+  </footer>
+  <script src="previous.js"></script>
+</body>
+</html>
