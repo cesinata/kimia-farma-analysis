@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kimia Farma sales dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23073526'/%3E%3Cpath d='M8 16h16M16 8v16' stroke='%23e7f6ee' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-row">
+      <div>
+        <p class="eyebrow">Kimia Farma · portfolio</p>
+        <h1>Sales dashboard</h1>
+        <p class="lede">Sale lines from 20 Jan 2022 to 2 Feb 2022. The 2023 report read those dates backwards, so the trend ran out to 2031. This page keeps every invoice.</p>
+      </div>
+      <a class="ghost" href="../DATA_STUDIO.md">Publish free in Data Studio</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <form class="filters" id="filters">
+      <label>Branch <select id="branch"></select></label>
+      <label>Channel <select id="channel"></select></label>
+      <label>Product line <select id="line"></select></label>
+      <label>Unit sold <select id="unit"></select></label>
+      <button type="button" class="reset" id="reset">Reset filters</button>
+    </form>
+    <p class="status" id="status" aria-live="polite"></p>
+    <div class="chips" id="chips"></div>
+
+    <section class="kpis" aria-label="Totals">
+      <article class="kpi">
+        <h2>Total sales revenue</h2>
+        <p id="kpi-revenue">–</p>
+        <span id="kpi-revenue-note">IDR</span>
+      </article>
+      <article class="kpi">
+        <h2>Invoices</h2>
+        <p id="kpi-invoices">–</p>
+        <span>distinct invoice ids</span>
+      </article>
+      <article class="kpi">
+        <h2>Products sold</h2>
+        <p id="kpi-units">–</p>
+        <span>units, jumlah barang</span>
+      </article>
+      <article class="kpi">
+        <h2>Purchases</h2>
+        <p id="kpi-lines">–</p>
+        <span>sale lines</span>
+      </article>
+    </section>
+
+    <section class="channel-card" aria-label="Channel split">
+      <div class="channel-bar" id="channel-bar"></div>
+      <div class="channel-legend" id="channel-legend"></div>
+    </section>
+
+    <section class="answers" aria-label="Answers">
+      <article>
+        <h2>How are the sales trending?</h2>
+        <p id="answer-trend"></p>
+      </article>
+      <article>
+        <h2>Which customer has the most purchases?</h2>
+        <p id="answer-customer"></p>
+      </article>
+      <article>
+        <h2>What is our top product?</h2>
+        <p id="answer-product"></p>
+      </article>
+      <article>
+        <h2>Which transaction has the highest number of products?</h2>
+        <p id="answer-invoice"></p>
+      </article>
+    </section>
+
+    <div class="layout">
+      <section class="card">
+        <h2>How are the sales trending?</h2>
+        <p class="hint">Each bar is one day. Days with no invoice stay in the row.</p>
+        <div class="trend-scroll">
+          <div class="trend" id="trend"></div>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Which customer has the most purchases?</h2>
+        <p class="hint">Outlet name, summed across customer ids. Click a row to filter.</p>
+        <div id="customers"></div>
+      </section>
+    </div>
+
+    <div class="layout">
+      <section class="card">
+        <h2>What is our top product?</h2>
+        <p class="hint">Ranked by revenue. Click a product to filter.</p>
+        <div id="products"></div>
+      </section>
+      <section class="card">
+        <h2>Packaging mix</h2>
+        <div class="toggles">
+          <div class="toggle">
+            <span>Measure</span>
+            <div class="seg" role="group" aria-label="Mix measure">
+              <button type="button" id="measure-revenue" data-measure="revenue" aria-pressed="true">Revenue</button>
+              <button type="button" id="measure-units" data-measure="units">Units</button>
+              <button type="button" id="measure-lines" data-measure="lines">Lines</button>
+            </div>
+          </div>
+          <div class="toggle">
+            <span>Group by</span>
+            <div class="seg" role="group" aria-label="Packaging source">
+              <button type="button" id="pack-unit" data-pack="unit" aria-pressed="true">Unit sold</button>
+              <button type="button" id="pack-master" data-pack="master">Master packaging</button>
+            </div>
+          </div>
+        </div>
+        <p class="hint" id="pack-hint"></p>
+        <div class="mix">
+          <div class="donut-wrap">
+            <svg id="donut" viewBox="0 0 160 160" role="img" aria-label="Packaging mix"></svg>
+            <div class="donut-center">
+              <strong id="donut-value">–</strong>
+              <span id="donut-caption">Revenue</span>
+            </div>
+          </div>
+          <ul class="legend" id="legend"></ul>
+        </div>
+        <h3>Product line</h3>
+        <p class="hint">Click a line to filter.</p>
+        <div id="lines"></div>
+      </section>
+    </div>
+
+    <div class="layout layout-stack">
+      <section class="card">
+        <h2>Which transaction has the highest number of products?</h2>
+        <p class="hint">Ranked by units on the invoice. The highlighted row is the maximum, whatever the sort.</p>
+        <div class="table-wrap" id="invoices"></div>
+      </section>
+      <section class="card">
+        <h2>Total revenue of each customer</h2>
+        <p class="hint">Same outlet rollup as the original customer query.</p>
+        <div class="table-wrap" id="customer-table"></div>
+      </section>
+    </div>
+
+    <details class="notes">
+      <summary>What changed from the 2023 Data Studio report</summary>
+      <ul>
+        <li>Source dates are day/month/year. <code>30/01/22</code> is 30 January 2022. The old report read it as 22 January 2030, which is why every bar sat on the 22nd and the axis reached 2031.</li>
+        <li>The invoice query used <code>HAVING COUNT(*) &gt; 1</code>. That dropped IN6089, IN6190, and IN6245: 83 units and Rp 4.755.500. The old “products sold” figure of 2.154 is the total with those three removed. This page keeps them: 2.237 units, Rp 90.637.700, 28 invoices.</li>
+        <li>TRAMADOL KAPSUL 50 MG and TETRACYCLINE KAPSUL 250 MG are kapsul on the product master and tablet on the sales lines. “Unit sold” follows the sales file. “Master packaging” groups those two with kapsul.</li>
+        <li>25 customer ids on these invoices belong to 8 outlet names. Totals follow the outlet name, which is what the original customer aggregate did. APOTEK MERDEKA in Bandung is still first, at Rp 30.030.900.</li>
+      </ul>
+    </details>
+  </main>
+
+  <footer class="wrap foot">
+    <p id="foot-note"></p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
