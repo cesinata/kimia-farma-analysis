@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-"""Rebuild the Kimia Farma sale-line table from the three source CSVs.
+"""Build English sales datasets for the Kimia Farma portfolio dashboard.
 
-The SQL files in sql/ are the transformation. This script loads the CSVs
-into SQLite, runs those queries, and writes:
+Reads the original Indonesian CSVs in source/, writes:
 
-- dashboard/data.js          data for the portfolio dashboard
-- looker/kimia_farma_sales.csv   UTF-8 file for a free Data Studio upload
+- data/sales.csv, data/customers.csv, data/products.csv
+- data/sale_lines.csv          grain for the dashboard / Data Studio
+- data/invoice_totals.csv
+- data/customer_totals.csv
+- looker/kimia_farma_sales.csv
+- dashboard/data.js
 
-Run from anywhere: python3 scripts/rebuild_sales.py
+Outlet names keep the Indonesian proper noun and use an English type:
+Merdeka Pharmacy, Sahabat Clinic, and so on.
 """
+
+from __future__ import annotations
 
 import csv
 import json
@@ -16,10 +22,60 @@ import sqlite3
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / "source"
+DATA = ROOT / "data"
+LOOKER = ROOT / "looker"
+DASHBOARD = ROOT / "dashboard"
 SQL = ROOT / "sql"
 
-# Column names follow Data Studio file-upload rules: letters, digits,
-# underscores, and they must start with a letter.
+OUTLET_NAMES = {
+    "APOTEK MERDEKA": "Merdeka Pharmacy",
+    "APOTEK TAPAK": "Tapak Pharmacy",
+    "APOTEK MAJA": "Maja Pharmacy",
+    "APOTEK SINAR JAYA": "Sinar Jaya Pharmacy",
+    "APOTEK SAHABAT": "Sahabat Pharmacy",
+    "KLINIK SAHABAT": "Sahabat Clinic",
+    "KLINIK GM": "GM Clinic",
+    "KLINIK DR. ANDRI": "Dr. Andri Clinic",
+}
+
+CHANNEL_NAMES = {
+    "Apotek": "Pharmacy",
+    "Klinik": "Clinic",
+}
+
+UNIT_NAMES = {
+    "DUS": "Box",
+    "BOTOL": "Bottle",
+    "TABLET": "Tablet",
+    "KAPSUL": "Capsule",
+}
+
+PRODUCT_NAMES = {
+    "ACYCLOVIR DUS": "Acyclovir Box",
+    "ALERGINE TABLET SALUT": "Alerine Coated Tablet",
+    "AMPICILLIN": "Ampicillin",
+    "TRAMADOL KAPSUL 50 MG": "Tramadol Capsule 50 mg",
+    "KLORPROMAZINA TABLET SALUT SELAPUT 100 MG": "Chlorpromazine Film-Coated Tablet 100 mg",
+    "KETOCONAZOLE TABLET 200 MG": "Ketoconazole Tablet 200 mg",
+    "ERGOTAMINE COFFEINE": "Ergotamine Caffeine",
+    "TETRACYCLINE KAPSUL 250 MG": "Tetracycline Capsule 250 mg",
+    "AMBROXOL HC": "Ambroxol HC",
+    "PARACETAMOL": "Paracetamol",
+}
+
+PRODUCT_LINES = {
+    "ETIKAL": "Ethical",
+    "OGB & PH": "OGB & PH",
+    "MARCKS": "Marcks",
+    "VNS": "VNS",
+    "SLCYL": "SLCYL",
+}
+
+TYPE_NAMES = {
+    "Produk jadi": "Finished product",
+}
+
 LOOKER_FIELDS = [
     "sale_id",
     "invoice_id",
@@ -39,205 +95,258 @@ LOOKER_FIELDS = [
 ]
 
 
-def load_csv(path):
+def load_csv(path: Path) -> list[dict]:
     with path.open(newline="", encoding="utf-8") as handle:
-        return [row for row in csv.DictReader(handle) if any(row.values())]
+        return [row for row in csv.DictReader(handle) if any((value or "").strip() for value in row.values())]
 
 
-def read_sql(name):
+def write_csv(path: Path, fieldnames: list[str], rows: list[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def parse_date(value: str) -> str:
+    day, month, year = value.split("/")
+    return f"20{year}-{month}-{day}"
+
+
+def english_customers(rows: list[dict]) -> list[dict]:
+    out = []
+    for row in rows:
+        name = row["nama"].strip()
+        if name not in OUTLET_NAMES:
+            raise SystemExit(f"Unknown outlet name: {name!r}")
+        channel = row["group"].strip()
+        out.append(
+            {
+                "customer_id": row["id_customer"],
+                "level": row["level"],
+                "customer_name": OUTLET_NAMES[name],
+                "branch_id": row["id_cabang_sales"],
+                "branch": row["cabang_sales"],
+                "channel_id": row["id_group"],
+                "channel": CHANNEL_NAMES[channel],
+            }
+        )
+    return out
+
+
+def english_products(rows: list[dict]) -> list[dict]:
+    out = []
+    for row in rows:
+        name = row["nama_barang"].strip()
+        line = row["lini"].strip()
+        pack = row["kemasan"].strip()
+        type_name = row["nama_tipe"].strip()
+        if name not in PRODUCT_NAMES:
+            raise SystemExit(f"Unknown product name: {name!r}")
+        out.append(
+            {
+                "product_id": row["kode_barang"],
+                "sector": row["sektor"],
+                "product_name": PRODUCT_NAMES[name],
+                "type_code": row["tipe"],
+                "type_name": TYPE_NAMES.get(type_name, type_name),
+                "line_code": row["kode_lini"],
+                "product_line": PRODUCT_LINES.get(line, line),
+                "packaging": UNIT_NAMES[pack],
+            }
+        )
+    return out
+
+
+def english_sales(rows: list[dict]) -> list[dict]:
+    out = []
+    for row in rows:
+        unit = row["unit"].strip()
+        out.append(
+            {
+                "invoice_id": row["id_invoice"],
+                "date": parse_date(row["tanggal"].strip()),
+                "customer_id": row["id_customer"],
+                "product_id": row["id_barang"],
+                "quantity": int(row["jumlah_barang"]),
+                "unit": UNIT_NAMES[unit],
+                "unit_price": int(row["harga"]),
+                "currency": row["mata_uang"],
+            }
+        )
+    return out
+
+
+def read_sql(name: str) -> str:
     text = (SQL / name).read_text(encoding="utf-8").strip()
-    if text.endswith(";"):
-        text = text[:-1].rstrip()
-    return text
+    return text[:-1].rstrip() if text.endswith(";") else text
 
 
-def connect():
-    penjualan = load_csv(ROOT / "data_penjualan.csv")
-    pelanggan = load_csv(ROOT / "data_pelanggan.csv")
-    barang = load_csv(ROOT / "data_barang.csv")
-
+def connect(sales, customers, products) -> sqlite3.Connection:
     con = sqlite3.connect(":memory:")
     con.row_factory = sqlite3.Row
-    con.execute(
+    con.executescript(
         """
-        CREATE TABLE penjualan (
-            id_invoice TEXT,
-            tanggal TEXT,
-            id_customer TEXT,
-            id_barang TEXT,
-            jumlah_barang INTEGER,
+        CREATE TABLE sales (
+            invoice_id TEXT,
+            date TEXT,
+            customer_id TEXT,
+            product_id TEXT,
+            quantity INTEGER,
             unit TEXT,
-            harga INTEGER,
-            mata_uang TEXT
-        )
-        """
-    )
-    con.execute(
-        """
-        CREATE TABLE pelanggan (
-            id_customer TEXT PRIMARY KEY,
+            unit_price INTEGER,
+            currency TEXT
+        );
+        CREATE TABLE customers (
+            customer_id TEXT PRIMARY KEY,
             level TEXT,
-            nama TEXT,
-            id_cabang_sales TEXT,
-            cabang_sales TEXT,
-            id_group TEXT,
-            "group" TEXT
-        )
-        """
-    )
-    con.execute(
-        """
-        CREATE TABLE barang (
-            kode_barang TEXT PRIMARY KEY,
-            sektor TEXT,
-            nama_barang TEXT,
-            tipe TEXT,
-            nama_tipe TEXT,
-            kode_lini TEXT,
-            lini TEXT,
-            kemasan TEXT
-        )
+            customer_name TEXT,
+            branch_id TEXT,
+            branch TEXT,
+            channel_id TEXT,
+            channel TEXT
+        );
+        CREATE TABLE products (
+            product_id TEXT PRIMARY KEY,
+            sector TEXT,
+            product_name TEXT,
+            type_code TEXT,
+            type_name TEXT,
+            line_code TEXT,
+            product_line TEXT,
+            packaging TEXT
+        );
         """
     )
     con.executemany(
         """
-        INSERT INTO penjualan VALUES
-        (:id_invoice, :tanggal, :id_customer, :id_barang,
-         :jumlah_barang, :unit, :harga, :mata_uang)
+        INSERT INTO sales VALUES
+        (:invoice_id, :date, :customer_id, :product_id, :quantity, :unit, :unit_price, :currency)
         """,
-        penjualan,
+        sales,
     )
     con.executemany(
         """
-        INSERT INTO pelanggan VALUES
-        (:id_customer, :level, :nama, :id_cabang_sales, :cabang_sales,
-         :id_group, :group)
+        INSERT INTO customers VALUES
+        (:customer_id, :level, :customer_name, :branch_id, :branch, :channel_id, :channel)
         """,
-        pelanggan,
+        customers,
     )
     con.executemany(
         """
-        INSERT INTO barang VALUES
-        (:kode_barang, :sektor, :nama_barang, :tipe, :nama_tipe,
-         :kode_lini, :lini, :kemasan)
+        INSERT INTO products VALUES
+        (:product_id, :sector, :product_name, :type_code, :type_name, :line_code, :product_line, :packaging)
         """,
-        barang,
+        products,
     )
     con.execute(f"CREATE VIEW sale_lines AS {read_sql('01_sale_lines.sql')}")
     return con
 
 
-def rows_as_dicts(con, sql):
+def rows_as_dicts(con: sqlite3.Connection, sql: str) -> list[dict]:
     return [dict(row) for row in con.execute(sql)]
 
 
-def assert_pipeline(con, lines):
-    revenue = sum(row["subtotal"] for row in lines)
-    quantity = sum(row["jumlah_barang"] for row in lines)
-    invoices = {row["id_invoice"] for row in lines}
-    names = {row["nama_customer"] for row in lines}
+def assert_pipeline(con: sqlite3.Connection, lines: list[dict]) -> None:
+    revenue = sum(row["line_total"] for row in lines)
+    quantity = sum(row["quantity"] for row in lines)
+    invoices = {row["invoice_id"] for row in lines}
+    names = {row["customer_name"] for row in lines}
     if len(lines) != 132 or revenue != 90637700 or quantity != 2237:
-        raise SystemExit(
-            f"Unexpected totals: lines={len(lines)} revenue={revenue} qty={quantity}"
-        )
+        raise SystemExit(f"Unexpected totals: lines={len(lines)} revenue={revenue} qty={quantity}")
     if len(invoices) != 28 or len(names) != 8:
         raise SystemExit("Unexpected invoice or outlet count")
-    if any(row["nama_barang"] is None or row["nama_customer"] is None for row in lines):
-        raise SystemExit("A sale line lost its product or customer in the join")
-    if any(row["tanggal"] < "2022-01-20" or row["tanggal"] > "2022-02-02" for row in lines):
+    if any(row["date"] < "2022-01-20" or row["date"] > "2022-02-02" for row in lines):
         raise SystemExit("A date fell outside 20 Jan 2022 – 2 Feb 2022")
+    if "Merdeka Pharmacy" not in names or "Sahabat Clinic" not in names:
+        raise SystemExit("English outlet names missing")
 
     customers = rows_as_dicts(con, read_sql("03_customer_totals.sql"))
-    with (ROOT / "Result_Aggregate_3.csv").open(newline="", encoding="utf-8") as handle:
-        original = list(csv.DictReader(handle))
-    rebuilt = [(row["nama_customer"], row["grand_total"], row["cabang"]) for row in customers]
     expected = [
-        (row["nama_customer"], int(row["grand_total"]), row["cabang"]) for row in original
+        ("Merdeka Pharmacy", 30030900, "Bandung"),
+        ("Tapak Pharmacy", 18330100, "Aceh"),
+        ("Sahabat Clinic", 10167000, "Tangerang"),
+        ("GM Clinic", 9469900, "Jakarta"),
+        ("Sinar Jaya Pharmacy", 9215300, "Bekasi"),
+        ("Maja Pharmacy", 8853800, "Kuningan"),
+        ("Dr. Andri Clinic", 2681200, "Lampung"),
+        ("Sahabat Pharmacy", 1889500, "Padang"),
     ]
+    rebuilt = [(row["customer_name"], row["grand_total"], row["branch"]) for row in customers]
     if rebuilt != expected:
-        raise SystemExit(f"Customer totals drifted from Result_Aggregate_3.csv:\n{rebuilt}")
+        raise SystemExit(f"Customer totals drifted:\n{rebuilt}")
 
     invoices_now = rows_as_dicts(con, read_sql("02_invoice_totals.sql"))
     if len(invoices_now) != 28:
         raise SystemExit("Invoice query should keep all 28 invoices")
-    old_having = rows_as_dicts(
-        con,
-        """
-        SELECT id_invoice, SUM(jumlah_barang) AS jumlah_barang, SUM(subtotal) AS total
-        FROM sale_lines
-        GROUP BY id_invoice
-        HAVING COUNT(*) > 1
-        """,
+
+
+def main() -> None:
+    sales = english_sales(load_csv(SOURCE / "sales_raw.csv"))
+    customers = english_customers(load_csv(SOURCE / "customers_raw.csv"))
+    products = english_products(load_csv(SOURCE / "products_raw.csv"))
+
+    write_csv(
+        DATA / "sales.csv",
+        ["invoice_id", "date", "customer_id", "product_id", "quantity", "unit", "unit_price", "currency"],
+        sales,
     )
-    with (ROOT / "Result_Aggregate_2.csv").open(newline="", encoding="utf-8") as handle:
-        original_invoices = {
-            row["id_invoice"]: (int(row["all_jumlah_barang"]), int(row["total"]))
-            for row in csv.DictReader(handle)
-        }
-    rebuilt_invoices = {
-        row["id_invoice"]: (row["jumlah_barang"], row["total"]) for row in old_having
-    }
-    if rebuilt_invoices != original_invoices:
-        raise SystemExit("Old HAVING query no longer matches Result_Aggregate_2.csv")
-    dropped = sorted(invoices - set(original_invoices))
-    if dropped != ["IN6089", "IN6190", "IN6245"]:
-        raise SystemExit(f"Unexpected dropped invoices: {dropped}")
+    write_csv(
+        DATA / "customers.csv",
+        ["customer_id", "level", "customer_name", "branch_id", "branch", "channel_id", "channel"],
+        customers,
+    )
+    write_csv(
+        DATA / "products.csv",
+        ["product_id", "sector", "product_name", "type_code", "type_name", "line_code", "product_line", "packaging"],
+        products,
+    )
 
-
-def to_looker(row):
-    return {
-        "sale_id": row["id_penjualan"],
-        "invoice_id": row["id_invoice"],
-        "date": row["tanggal"],
-        "product_id": row["id_barang"],
-        "product_name": row["nama_barang"],
-        "product_line": row["lini"],
-        "unit": row["unit"],
-        "master_packaging": row["kemasan_master"],
-        "quantity": row["jumlah_barang"],
-        "unit_price": row["harga"],
-        "line_total": row["subtotal"],
-        "customer_id": row["id_customer"],
-        "customer_name": row["nama_customer"],
-        "branch": row["cabang_sales"],
-        "channel": row["group_category"],
-    }
-
-
-def main():
-    con = connect()
-    lines = rows_as_dicts(con, "SELECT * FROM sale_lines ORDER BY tanggal, id_invoice, id_barang")
+    con = connect(sales, customers, products)
+    lines = rows_as_dicts(
+        con,
+        "SELECT * FROM sale_lines ORDER BY date, invoice_id, product_id",
+    )
     assert_pipeline(con, lines)
-    records = [to_looker(row) for row in lines]
 
-    looker_dir = ROOT / "looker"
-    looker_dir.mkdir(exist_ok=True)
-    looker_path = looker_dir / "kimia_farma_sales.csv"
-    with looker_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=LOOKER_FIELDS, lineterminator="\n")
-        writer.writeheader()
-        writer.writerows(records)
+    invoices = rows_as_dicts(con, read_sql("02_invoice_totals.sql"))
+    customer_totals = rows_as_dicts(con, read_sql("03_customer_totals.sql"))
 
-    dashboard_dir = ROOT / "dashboard"
-    dashboard_dir.mkdir(exist_ok=True)
+    write_csv(DATA / "sale_lines.csv", LOOKER_FIELDS, lines)
+    write_csv(
+        DATA / "invoice_totals.csv",
+        ["invoice_id", "date", "customer_name", "branch", "line_count", "quantity", "total"],
+        invoices,
+    )
+    write_csv(
+        DATA / "customer_totals.csv",
+        ["customer_name", "grand_total", "branch", "channel", "customer_id_count", "invoice_count", "quantity"],
+        customer_totals,
+    )
+
+    LOOKER.mkdir(exist_ok=True)
+    write_csv(LOOKER / "kimia_farma_sales.csv", LOOKER_FIELDS, lines)
+
+    DASHBOARD.mkdir(exist_ok=True)
     payload = {
-        "rows": records,
+        "rows": lines,
         "currency": "IDR",
-        "dateStart": min(row["date"] for row in records),
-        "dateEnd": max(row["date"] for row in records),
+        "dateStart": min(row["date"] for row in lines),
+        "dateEnd": max(row["date"] for row in lines),
     }
-    data_js = dashboard_dir / "data.js"
-    data_js.write_text(
+    (DASHBOARD / "data.js").write_text(
         "window.KIMIA = " + json.dumps(payload, ensure_ascii=True, separators=(",", ":")) + ";\n",
         encoding="utf-8",
     )
-    print(f"Wrote {looker_path.relative_to(ROOT)} ({len(records)} rows)")
-    print(f"Wrote {data_js.relative_to(ROOT)}")
+
+    print(f"Wrote English tables under {DATA.relative_to(ROOT)}/")
+    print(f"Wrote {LOOKER.relative_to(ROOT)}/kimia_farma_sales.csv ({len(lines)} rows)")
+    print(f"Wrote {DASHBOARD.relative_to(ROOT)}/data.js")
     print(
         "Revenue Rp {:,} · {} invoices · {} units".format(
-            sum(row["line_total"] for row in records),
-            len({row["invoice_id"] for row in records}),
-            sum(row["quantity"] for row in records),
+            sum(row["line_total"] for row in lines),
+            len({row["invoice_id"] for row in lines}),
+            sum(row["quantity"] for row in lines),
         ).replace(",", ".")
     )
 

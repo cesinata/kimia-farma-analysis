@@ -8,15 +8,15 @@
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const KEYS = ["branch", "channel", "line", "unit", "customer", "product", "day"];
   const COLORS = {
-    TABLET: "#0c7a45",
-    BOTOL: "#1c7f7a",
-    DUS: "#c4881a",
-    KAPSUL: "#3d6b9a",
-    "OGB & PH": "#0c7a45",
-    ETIKAL: "#1c7f7a",
-    SLCYL: "#3d6b9a",
+    Tablet: "#1c4173",
+    Bottle: "#4e6f9a",
+    Box: "#a8b7cb",
+    Capsule: "#eb6001",
+    Ethical: "#1c4173",
+    "OGB & PH": "#eb6001",
+    SLCYL: "#4e6f9a",
     VNS: "#c4881a",
-    MARCKS: "#8a5a44",
+    Marcks: "#8a5a44",
   };
 
   const state = {
@@ -31,7 +31,6 @@
   const view = { measure: "revenue", packaging: "unit" };
   const invoiceSort = { key: "quantity", dir: -1 };
   const customerSort = { key: "revenue", dir: -1 };
-
   const productName = new Map(DATA.map((row) => [row.product_id, row.product_name]));
 
   function formatInt(value) {
@@ -46,7 +45,7 @@
 
   function formatPct(part, whole) {
     if (!whole) return "0%";
-    return (100 * part / whole).toFixed(1) + "%";
+    return ((100 * part) / whole).toFixed(1) + "%";
   }
 
   function formatDate(iso) {
@@ -157,16 +156,23 @@
     KEYS.forEach((key) => {
       if (state[key]) params.set(key, state[key]);
     });
+    if (view.measure !== "revenue") params.set("measure", view.measure);
+    if (view.packaging !== "unit") params.set("pack", view.packaging);
     const query = params.toString();
     const next = query ? location.pathname + "?" + query : location.pathname;
-    if (location.pathname + location.search !== next) {
-      history.replaceState(null, "", next);
-    }
+    if (location.pathname + location.search !== next) history.replaceState(null, "", next);
   }
 
   function toggle(key, value) {
     state[key] = state[key] === value ? "" : value;
     draw();
+  }
+
+  function empty(text) {
+    const note = document.createElement("p");
+    note.className = "empty";
+    note.textContent = text;
+    return note;
   }
 
   function renderChips() {
@@ -197,10 +203,7 @@
   function renderBars(host, buckets, options) {
     host.replaceChildren();
     if (!buckets.length) {
-      const note = document.createElement("p");
-      note.className = "empty";
-      note.textContent = "Nothing to show in this filter.";
-      host.append(note);
+      host.append(empty("Nothing to show in this filter."));
       return;
     }
     const max = Math.max(...buckets.map((bucket) => bucket[options.measure]));
@@ -229,6 +232,7 @@
       const fill = document.createElement("span");
       fill.className = "fill";
       fill.style.setProperty("--w", (max ? (100 * bucket[options.measure]) / max : 0) + "%");
+      if (options.fill) fill.style.background = options.fill(bucket);
       track.append(fill);
       button.append(name, value, meta, track);
       button.addEventListener("click", () => options.onClick(bucket));
@@ -256,13 +260,12 @@
       if (!bucket) {
         const emptyDay = document.createElement("div");
         emptyDay.className = "day is-empty";
-        const bar = document.createElement("span");
-        bar.className = "day-bar";
+        emptyDay.title = formatDate(iso) + ", no invoices";
+        emptyDay.append(Object.assign(document.createElement("span"), { className: "day-bar" }));
         const label = document.createElement("span");
         label.className = "day-label";
         label.textContent = formatDay(iso);
-        emptyDay.title = formatDate(iso) + ", no invoices";
-        emptyDay.append(bar, label);
+        emptyDay.append(label);
         host.append(emptyDay);
         return;
       }
@@ -287,20 +290,13 @@
     });
   }
 
-  function empty(text) {
-    const note = document.createElement("p");
-    note.className = "empty";
-    note.textContent = text;
-    return note;
-  }
-
   function renderChannel(rows) {
     const bar = document.getElementById("channel-bar");
     const legend = document.getElementById("channel-legend");
     bar.replaceChildren();
     legend.replaceChildren();
     const total = sum(rows, (row) => row.line_total);
-    ["Apotek", "Klinik"].forEach((channel) => {
+    ["Pharmacy", "Clinic"].forEach((channel) => {
       const revenue = sum(rows.filter((row) => row.channel === channel), (row) => row.line_total);
       if (!revenue) return;
       const segment = document.createElement("span");
@@ -312,9 +308,7 @@
       label.textContent = channel + " " + formatRp(revenue) + " · " + formatPct(revenue, total);
       legend.append(label);
     });
-    if (!bar.childElementCount) {
-      legend.textContent = "No channel split in this filter.";
-    }
+    if (!bar.childElementCount) legend.textContent = "No channel split in this filter.";
   }
 
   function renderDonut(rows) {
@@ -333,14 +327,18 @@
       .sort((a, b) => b.value - a.value || a.key.localeCompare(b.key));
     const total = buckets.reduce((summed, bucket) => summed + bucket.value, 0);
     const caption = measure === "revenue" ? "Revenue" : measure === "units" ? "Units" : "Lines";
-    svg.setAttribute("aria-label", total
-      ? "Packaging mix by " + caption.toLowerCase() + ". " + buckets.map((bucket) => bucket.key + " " + formatPct(bucket.value, total)).join(", ")
-      : "Packaging mix, no sales in this filter");
+    svg.setAttribute(
+      "aria-label",
+      total
+        ? "Packaging mix by " + caption.toLowerCase() + ". " + buckets.map((bucket) => bucket.key + " " + formatPct(bucket.value, total)).join(", ")
+        : "Packaging mix, no sales in this filter"
+    );
     document.getElementById("donut-caption").textContent = total ? buckets[0].key : caption;
     document.getElementById("donut-value").textContent = total ? formatPct(buckets[0].value, total) : "–";
-    document.getElementById("pack-hint").textContent = view.packaging === "master"
-      ? "Master packaging moves tramadol and tetracycline into kapsul. The sales file recorded both as tablet."
-      : "Unit sold is the unit written on the invoice. The old pie’s 37.9% is botol’s share of sale lines.";
+    document.getElementById("pack-hint").textContent =
+      view.packaging === "master"
+        ? "Master packaging moves tramadol and tetracycline into Capsule. The sales file recorded both as Tablet."
+        : "Unit sold is the unit written on the invoice. The old pie’s 37.9% is Bottle’s share of sale lines.";
 
     if (!total) {
       legend.append(empty("Nothing to show in this filter."));
@@ -461,16 +459,43 @@
 
     const outlets = group(rows, (row) => row.customer_name).sort((a, b) => b.revenue - a.revenue);
     const topOutlet = outlets[0];
-    const idCount = topOutlet.customers.size;
-    customer.textContent = topOutlet.key + " in " + only(topOutlet.branches) + " leads with " + formatRp(topOutlet.revenue) + ", " + formatPct(topOutlet.revenue, total) + " of this view, across " + idCount + (idCount === 1 ? " customer id." : " customer ids.");
+    customer.textContent =
+      topOutlet.key +
+      " in " +
+      only(topOutlet.branches) +
+      " leads with " +
+      formatRp(topOutlet.revenue) +
+      ", " +
+      formatPct(topOutlet.revenue, total) +
+      " of this view, across " +
+      topOutlet.customers.size +
+      (topOutlet.customers.size === 1 ? " customer id." : " customer ids.");
 
     const products = group(rows, (row) => row.product_id).sort((a, b) => b.revenue - a.revenue);
     const topProduct = products[0];
-    product.textContent = topProduct.sample.product_name + " (" + topProduct.sample.product_line + ") leads with " + formatRp(topProduct.revenue) + " from " + formatInt(topProduct.quantity) + " units.";
+    product.textContent =
+      topProduct.sample.product_name +
+      " (" +
+      topProduct.sample.product_line +
+      ") leads with " +
+      formatRp(topProduct.revenue) +
+      " from " +
+      formatInt(topProduct.quantity) +
+      " units.";
 
     const invoices = group(rows, (row) => row.invoice_id).sort((a, b) => b.quantity - a.quantity || b.revenue - a.revenue);
     const topInvoice = invoices[0];
-    invoice.textContent = topInvoice.key + " for " + only(topInvoice.names) + " moves " + formatInt(topInvoice.quantity) + " units on " + formatDate([...topInvoice.dates].sort()[0]) + ", " + formatRp(topInvoice.revenue) + ".";
+    invoice.textContent =
+      topInvoice.key +
+      " for " +
+      only(topInvoice.names) +
+      " moves " +
+      formatInt(topInvoice.quantity) +
+      " units on " +
+      formatDate([...topInvoice.dates].sort()[0]) +
+      ", " +
+      formatRp(topInvoice.revenue) +
+      ".";
   }
 
   function draw() {
@@ -485,7 +510,6 @@
     document.getElementById("kpi-invoices").textContent = rows.length ? formatInt(invoices.size) : "–";
     document.getElementById("kpi-units").textContent = rows.length ? formatInt(sum(rows, (row) => row.quantity)) : "–";
     document.getElementById("kpi-lines").textContent = rows.length ? formatInt(rows.length) : "–";
-    document.getElementById("kpi-revenue-note").textContent = rows.length === DATA.length ? "IDR, all invoices" : "IDR in this filter";
     document.getElementById("status").textContent = rows.length
       ? "Showing " + formatInt(rows.length) + " sale lines across " + formatInt(invoices.size) + " invoices."
       : "No sale lines match these filters.";
@@ -521,6 +545,7 @@
 
     renderDonut(rows);
     const lines = group(rowsFor("line"), (row) => row.product_line).sort((a, b) => b.revenue - a.revenue);
+    const lineTotal = sum(rowsFor("line"), (row) => row.line_total);
     renderBars(document.getElementById("lines"), lines, {
       measure: "revenue",
       id: (bucket) => "line-" + slug(bucket.key),
@@ -528,7 +553,8 @@
       dim: () => Boolean(state.line),
       name: (bucket) => bucket.key,
       value: (bucket) => formatRp(bucket.revenue),
-      meta: (bucket) => formatInt(bucket.quantity) + " units · " + formatPct(bucket.revenue, sum(rowsFor("line"), (row) => row.line_total)),
+      meta: (bucket) => formatInt(bucket.quantity) + " units · " + formatPct(bucket.revenue, lineTotal),
+      fill: () => "#1c4173",
       onClick: (bucket) => toggle("line", bucket.key),
     });
 
@@ -618,7 +644,14 @@
       customerSort
     );
 
-    document.getElementById("foot-note").textContent = "Built from " + formatInt(DATA.length) + " sale lines in data_penjualan, data_pelanggan, and data_barang. " + formatDate(window.KIMIA.dateStart) + " to " + formatDate(window.KIMIA.dateEnd) + ".";
+    document.getElementById("foot-note").textContent =
+      "Built from " +
+      formatInt(DATA.length) +
+      " sale lines in data/sales.csv, data/customers.csv, and data/products.csv. " +
+      formatDate(window.KIMIA.dateStart) +
+      " to " +
+      formatDate(window.KIMIA.dateEnd) +
+      ".";
     syncUrl();
     if (focusId) {
       const next = document.getElementById(focusId);
@@ -642,12 +675,8 @@
   KEYS.forEach((key) => {
     if (params.has(key)) state[key] = params.get(key);
   });
-  if (params.get("measure") === "units" || params.get("measure") === "lines" || params.get("measure") === "revenue") {
-    view.measure = params.get("measure");
-  }
-  if (params.get("pack") === "master" || params.get("pack") === "unit") {
-    view.packaging = params.get("pack");
-  }
+  if (["units", "lines", "revenue"].includes(params.get("measure"))) view.measure = params.get("measure");
+  if (["master", "unit"].includes(params.get("pack"))) view.packaging = params.get("pack");
   document.querySelectorAll("[data-measure]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.getAttribute("data-measure") === view.measure));
   });
@@ -663,7 +692,6 @@
   });
   document.getElementById("reset").addEventListener("click", reset);
   document.getElementById("filters").addEventListener("submit", (event) => event.preventDefault());
-
   document.querySelectorAll("[data-measure]").forEach((button) => {
     button.addEventListener("click", () => {
       view.measure = button.getAttribute("data-measure");

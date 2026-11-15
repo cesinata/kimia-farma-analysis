@@ -1,0 +1,351 @@
+customer_id,level,customer_name,branch_id,branch,channel_id,channel
+CUST55380,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55381,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55382,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55383,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55384,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55385,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55386,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55387,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55388,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55389,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55390,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55391,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55392,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55393,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55394,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55395,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55396,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55397,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55398,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55399,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55400,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55401,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55402,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55403,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55404,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55405,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55406,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55407,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55408,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55409,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55410,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55411,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55412,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55413,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55414,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55415,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55416,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55417,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55418,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55419,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55420,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55421,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55422,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55423,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55424,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55425,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55426,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55427,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55428,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55429,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55430,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55431,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55432,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55433,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55434,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55435,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55436,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55437,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55438,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55439,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55440,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55441,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55442,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55443,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55444,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55445,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55446,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55447,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55448,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55449,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55450,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55451,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55452,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55453,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55454,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55455,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55456,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55457,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55458,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55459,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55460,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55461,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55462,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55463,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55464,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55465,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55466,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55467,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55468,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55469,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55470,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55471,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55472,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55473,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55474,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55475,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55476,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55477,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55478,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55479,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55480,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55481,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55482,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55483,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55484,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55485,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55486,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55487,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55488,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55489,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55490,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55491,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55492,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55493,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55494,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55495,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55496,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55497,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55498,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55499,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55500,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55501,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55502,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55503,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55504,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55505,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55506,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55507,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55508,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55509,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55510,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55511,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55512,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55513,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55514,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55515,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55516,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55517,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55518,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55519,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55520,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55521,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55522,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55523,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55524,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55525,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55526,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55527,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55528,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55529,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55530,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55531,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55532,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55533,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55534,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55535,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55536,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55537,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55538,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55539,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55540,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55541,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55542,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55543,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55544,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55545,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55546,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55547,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55548,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55549,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55550,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55551,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55552,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55553,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55554,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55555,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55556,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55557,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55558,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55559,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55560,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55561,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55562,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55563,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55564,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55565,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55566,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55567,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55568,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55569,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55570,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55571,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55572,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55573,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55574,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55575,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55576,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55577,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55578,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55579,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55580,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55581,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55582,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55583,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55584,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55585,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55586,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55587,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55588,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55589,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55590,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55591,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55592,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55593,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55594,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55595,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55596,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55597,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55598,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55599,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55600,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55601,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55602,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55603,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55604,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55605,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55606,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55607,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55608,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55609,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55610,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55611,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55612,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55613,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55614,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55615,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55616,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55617,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55618,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55619,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55620,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55621,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55622,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55623,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55624,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55625,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55626,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55627,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55628,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55629,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55630,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55631,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55632,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55633,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55634,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55635,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55636,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55637,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55638,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55639,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55640,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55641,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55642,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55643,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55644,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55645,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55646,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55647,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55648,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55649,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55650,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55651,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55652,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55653,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55654,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55655,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55656,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55657,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55658,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55659,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55660,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55661,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55662,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55663,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55664,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55665,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55666,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55667,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55668,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55669,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55670,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55671,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55672,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55673,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55674,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55675,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55676,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55677,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55678,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55679,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55680,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55681,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55682,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55683,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55684,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55685,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55686,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55687,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55688,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55689,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55690,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55691,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55692,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55693,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55694,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55695,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55696,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55697,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55698,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55699,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55700,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55701,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55702,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55703,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55704,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55705,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55706,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55707,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55708,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55709,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55710,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55711,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55712,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55713,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55714,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55715,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55716,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55717,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55718,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55719,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55720,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55721,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic
+CUST55722,Company,Sinar Jaya Pharmacy,CAB06,Bekasi,Z32,Pharmacy
+CUST55723,Company,Sahabat Pharmacy,CAB07,Padang,Z32,Pharmacy
+CUST55724,Company,Dr. Andri Clinic,CAB08,Lampung,Z31,Clinic
+CUST55725,Company,Tapak Pharmacy,CAB01,Aceh,Z32,Pharmacy
+CUST55726,Company,Maja Pharmacy,CAB02,Kuningan,Z32,Pharmacy
+CUST55727,Company,GM Clinic,CAB03,Jakarta,Z31,Clinic
+CUST55728,Company,Merdeka Pharmacy,CAB04,Bandung,Z32,Pharmacy
+CUST55729,Company,Sahabat Clinic,CAB05,Tangerang,Z31,Clinic

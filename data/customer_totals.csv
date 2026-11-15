@@ -1,0 +1,9 @@
+customer_name,grand_total,branch,channel,customer_id_count,invoice_count,quantity
+Merdeka Pharmacy,30030900,Bandung,Pharmacy,5,5,672
+Tapak Pharmacy,18330100,Aceh,Pharmacy,4,5,451
+Sahabat Clinic,10167000,Tangerang,Clinic,3,3,250
+GM Clinic,9469900,Jakarta,Clinic,3,5,294
+Sinar Jaya Pharmacy,9215300,Bekasi,Pharmacy,3,3,174
+Maja Pharmacy,8853800,Kuningan,Pharmacy,4,4,253
+Dr. Andri Clinic,2681200,Lampung,Clinic,1,1,76
+Sahabat Pharmacy,1889500,Padang,Pharmacy,2,2,67

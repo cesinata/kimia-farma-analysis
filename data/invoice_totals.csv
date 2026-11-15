@@ -1,0 +1,29 @@
+invoice_id,date,customer_name,branch,line_count,quantity,total
+IN6028,2022-01-30,Merdeka Pharmacy,Bandung,10,386,16192900
+IN6063,2022-02-01,Tapak Pharmacy,Aceh,10,218,9545200
+IN6023,2022-02-01,Sahabat Clinic,Tangerang,7,132,4242000
+IN6155,2022-01-21,GM Clinic,Jakarta,8,127,3788000
+IN6306,2022-01-27,Sinar Jaya Pharmacy,Bekasi,3,124,7020500
+IN6307,2022-01-23,Maja Pharmacy,Kuningan,7,95,4200400
+IN6259,2022-02-01,Merdeka Pharmacy,Bandung,5,94,5066000
+IN6195,2022-01-31,Merdeka Pharmacy,Bandung,3,87,2969000
+IN6029,2022-01-28,GM Clinic,Jakarta,9,87,2916700
+IN6024,2022-01-27,Dr. Andri Clinic,Lampung,7,76,2681200
+IN6280,2022-01-23,Sahabat Clinic,Tangerang,7,65,2905000
+IN6144,2022-01-22,Merdeka Pharmacy,Bandung,5,65,1963000
+IN6184,2022-01-28,Tapak Pharmacy,Aceh,4,63,1903500
+IN5997,2022-01-20,Tapak Pharmacy,Aceh,5,62,2795500
+IN6297,2022-01-20,Maja Pharmacy,Kuningan,4,62,2335400
+IN6251,2022-01-23,Tapak Pharmacy,Aceh,9,60,2369900
+IN6036,2022-01-27,Maja Pharmacy,Kuningan,4,59,1441000
+IN6301,2022-02-01,Sahabat Pharmacy,Padang,4,58,1307200
+IN6287,2022-01-30,Sahabat Clinic,Tangerang,3,53,3020000
+IN6064,2022-02-02,Tapak Pharmacy,Aceh,2,48,1716000
+IN6190,2022-01-23,Merdeka Pharmacy,Bandung,1,40,3840000
+IN6131,2022-01-28,Maja Pharmacy,Kuningan,2,37,877000
+IN6102,2022-01-31,Sinar Jaya Pharmacy,Bekasi,2,35,1739800
+IN6245,2022-01-30,GM Clinic,Jakarta,1,34,333200
+IN6113,2022-02-01,GM Clinic,Jakarta,4,28,1274000
+IN6308,2022-01-23,GM Clinic,Jakarta,2,18,1158000
+IN6052,2022-01-23,Sinar Jaya Pharmacy,Bekasi,3,15,455000
+IN6089,2022-01-25,Sahabat Pharmacy,Padang,1,9,582300

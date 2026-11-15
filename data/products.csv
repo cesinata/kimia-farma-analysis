@@ -1,0 +1,11 @@
+product_id,sector,product_name,type_code,type_name,line_code,product_line,packaging
+BRG0001,P,Acyclovir Box,ZPJ1,Finished product,206,OGB & PH,Box
+BRG0002,P,Alerine Coated Tablet,ZPJ1,Finished product,203,Ethical,Box
+BRG0003,P,Ampicillin,ZPJ1,Finished product,210,Marcks,Bottle
+BRG0004,P,Tramadol Capsule 50 mg,ZPJ1,Finished product,201,VNS,Capsule
+BRG0005,P,Chlorpromazine Film-Coated Tablet 100 mg,ZPJ1,Finished product,203,SLCYL,Tablet
+BRG0006,P,Ketoconazole Tablet 200 mg,ZPJ1,Finished product,205,OGB & PH,Tablet
+BRG0007,P,Ergotamine Caffeine,ZPJ1,Finished product,206,Ethical,Bottle
+BRG0008,P,Tetracycline Capsule 250 mg,ZPJ1,Finished product,204,Marcks,Capsule
+BRG0009,P,Ambroxol HC,ZPJ1,Finished product,207,VNS,Bottle
+BRG0010,P,Paracetamol,ZPJ1,Finished product,208,SLCYL,Bottle
