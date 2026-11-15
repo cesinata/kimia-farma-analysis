@@ -1,25 +1,56 @@
-# Analyzing Kimia Farma Sales Trend with SQL and Interactive Dashboard
+# Analyzing Kimia Farma Sales Trends with SQL and an Interactive Dashboard
 
----
+Portfolio rebuild of a Big Data Analyst internship project: sales for Kimia Farma outlets over a short window, processed end to end from raw tables into SQL aggregates and a dashboard.
 
-As a Big Data Analyst Intern who already understands the sales data for each Brand at Kimia Farma, I was asked to make a dashboard of the sales data in one year from the raw data that has been provided. The data needs to be applied to data processing from start to finish. By applying this process, I hope I can understand the work of a Big Data Analyst at Kimia Farma.
+## Dashboard
 
-There are three tables provided, including:
-- penjualan (sales)
-- pelanggan (customer)
-- barang (goods/medicines)
+Open [`dashboard/index.html`](dashboard/index.html).
 
-First, I created the three tables with DDL by querying DDL_penjualan, DDL_pelanggan, and DDL_barang that I uploaded to this repository. Next for the EER diagram I made as shown below.
+Design direction: **Brand Classic** — Kimia Farma navy `#1C4173` and orange `#EB6001`, matching the 2023 report and the company brand.
 
-![EER Diagram](https://user-images.githubusercontent.com/70552539/214739450-54d1c5e6-d545-4d01-81f6-8b22f5817bd5.png)
+To publish the same numbers on free Google Data Studio, see [`DATA_STUDIO.md`](DATA_STUDIO.md) and upload [`looker/kimia_farma_sales.csv`](looker/kimia_farma_sales.csv).
 
+Rebuild English datasets from the original Indonesian source files:
 
-Furthermore, so that we can find deeper insights from this sales data, I merged and aggregated the data. First, I merged all tables for each sale and create primary key for each sale. Second, I aggregated the number of items and the total per invoice transaction. Then third, I aggregated the total purchases of all transactions from each customer. 
+```bash
+python3 scripts/rebuild_sales.py
+```
 
+## Data model
 
-Then I visualize the data through the Google Data Studio tool, which can be seen in the dashboard image below.
+Three tables:
 
-![image](https://user-images.githubusercontent.com/70552539/214751639-9a5ecbd4-0c4c-4b79-943d-dc12a9afc8a4.png)
+- `sales` — invoices / sale lines
+- `customers` — outlets
+- `products` — medicines
 
+English working copies live in [`data/`](data/). The original Indonesian internship files are preserved in [`source/`](source/).
 
-The dashboard is publicy accessed at: https://datastudio.google.com/reporting/c662ce06-e4cc-4757-8adf-68cdce9b6e08 
+SQL:
+
+- [`sql/schema_sales.sql`](sql/schema_sales.sql), [`sql/schema_customers.sql`](sql/schema_customers.sql), [`sql/schema_products.sql`](sql/schema_products.sql)
+- [`sql/01_sale_lines.sql`](sql/01_sale_lines.sql) — join for each sale line
+- [`sql/02_invoice_totals.sql`](sql/02_invoice_totals.sql) — units and revenue per invoice
+- [`sql/03_customer_totals.sql`](sql/03_customer_totals.sql) — revenue per outlet
+
+![EER Diagram](EER%20Diagram.png)
+
+## Corrections vs the 2023 report
+
+- Dates in the raw sales file are day/month/year. `30/01/22` is 30 January 2022. The old report read it as 22 January 2030, so the trend ran from 2001 to 2031.
+- The 2023 invoice query used `HAVING COUNT(*) > 1` and dropped invoices IN6089, IN6190, and IN6245 (83 units, Rp 4.755.500). The old “products sold” scorecard of 2.154 is that reduced total. This rebuild keeps every invoice: **Rp 90.637.700**, **2.237** units, **28** invoices.
+- Labels, packaging, channels, and file names are English for an international CV. Outlet proper names stay as Merdeka Pharmacy, Tapak Pharmacy, Sahabat Clinic, and so on.
+
+The previous public Data Studio link is no longer available. Data Studio (formerly Looker Studio) is still free for a personal report.
+
+## English naming
+
+| Indonesian source | English in this repo |
+| --- | --- |
+| APOTEK MERDEKA | Merdeka Pharmacy |
+| APOTEK TAPAK | Tapak Pharmacy |
+| KLINIK SAHABAT | Sahabat Clinic |
+| DUS / BOTOL / KAPSUL | Box / Bottle / Capsule |
+| Apotek / Klinik | Pharmacy / Clinic |
+| data_penjualan.csv | data/sales.csv |
+| Cabang | Branch |

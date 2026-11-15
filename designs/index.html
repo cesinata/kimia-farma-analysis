@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pick a dashboard design · Kimia Farma</title>
+  <style>
+    :root {
+      --ink: #152033;
+      --muted: #5b677a;
+      --line: #d7deea;
+      --page: #eef2f7;
+      --card: #ffffff;
+      --sans: "Segoe UI", Inter, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--page);
+      line-height: 1.45;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    header {
+      background: #10233f;
+      color: #f5f8fc;
+      padding: 28px 0 24px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.7rem;
+      letter-spacing: -0.03em;
+    }
+    header p { margin: 8px 0 0; max-width: 70ch; color: #c7d3e4; }
+    .refs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .refs a, .refs span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      padding: 7px 12px;
+      text-decoration: none;
+      font-size: .9rem;
+      color: #fff;
+    }
+    .swatch {
+      width: 12px; height: 12px; border-radius: 999px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);
+    }
+    main { padding: 22px 0 40px; }
+    .note {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .note strong { color: var(--ink); }
+    .picker {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .pick {
+      text-align: left;
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 14px;
+      padding: 12px;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+      min-height: 100%;
+    }
+    .pick:hover { border-color: #9eb0cb; }
+    .pick[aria-pressed="true"] {
+      border-color: #1c4173;
+      box-shadow: 0 0 0 2px rgba(28,65,115,.18);
+    }
+    .pick .num {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pick h2 {
+      margin: 4px 0 6px;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .pick p { margin: 0; font-size: .82rem; color: var(--muted); }
+    .chips { display: flex; gap: 5px; margin-top: 10px; }
+    .chip {
+      width: 18px; height: 18px; border-radius: 5px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+    }
+    .stage {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .stage-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #f8fafc;
+    }
+    .stage-bar h3 { margin: 0; font-size: 1.05rem; }
+    .stage-bar p { margin: 2px 0 0; color: var(--muted); font-size: .86rem; }
+    .badge {
+      border-radius: 999px;
+      background: #1c4173;
+      color: #fff;
+      font-size: .8rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      white-space: nowrap;
+    }
+    .preview-shell { padding: 16px; background: #dfe6f0; }
+    .mock {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.08);
+      min-height: 620px;
+    }
+    .mock-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+    }
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .logo-dot {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: .7rem; font-weight: 800;
+    }
+    .filter-pill {
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: .82rem;
+      border: 1px solid transparent;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      padding: 0;
+    }
+    .kpi { padding: 12px 14px; }
+    .kpi .label { font-size: .72rem; opacity: .8; }
+    .kpi .value { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.03em; margin-top: 4px; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 12px;
+      padding: 12px;
+    }
+    .panel {
+      border-radius: 10px;
+      padding: 12px;
+      min-height: 150px;
+    }
+    .panel h4 { margin: 0 0 8px; font-size: .92rem; }
+    .bars-v {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      align-items: end;
+      gap: 4px;
+      height: 110px;
+    }
+    .bars-v span {
+      display: block;
+      border-radius: 4px 4px 1px 1px;
+      min-height: 4px;
+    }
+    .bars-h { display: grid; gap: 7px; }
+    .row {
+      display: grid;
+      grid-template-columns: 92px 1fr 58px;
+      gap: 8px;
+      align-items: center;
+      font-size: .75rem;
+    }
+    .row b { font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .track { height: 8px; border-radius: 99px; overflow: hidden; }
+    .track i { display: block; height: 100%; border-radius: 99px; }
+    .donut-row {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+    .donut {
+      width: 88px; height: 88px; border-radius: 50%;
+      background:
+        conic-gradient(var(--c1) 0 37.9%, var(--c2) 37.9% 72.4%, var(--c3) 72.4% 100%);
+      mask: radial-gradient(circle at center, transparent 52%, #000 53%);
+      -webkit-mask: radial-gradient(circle at center, transparent 52%, #000 53%);
+    }
+    .legend { display: grid; gap: 6px; font-size: .78rem; }
+    .legend div { display: flex; justify-content: space-between; gap: 8px; }
+    .dot { width: 9px; height: 9px; border-radius: 2px; display: inline-block; margin-right: 6px; }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .74rem;
+    }
+    .table th, .table td {
+      padding: 6px 4px;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      text-align: left;
+    }
+    .table .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .map {
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .map h3 { margin: 0 0 8px; }
+    .map table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    .map th, .map td {
+      text-align: left;
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    .map th { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; }
+    .verdict {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: .9rem;
+    }
+    @media (max-width: 980px) {
+      .picker { grid-template-columns: 1fr 1fr; }
+      .kpis, .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .picker { grid-template-columns: 1fr; }
+      .kpis, .grid { grid-template-columns: 1fr; }
+      .stage-bar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Design picker (chosen: 1 · Brand Classic)</h1>
+      <p>
+        Design 1 was selected. The live dashboard is at
+        <a href="/dashboard/index.html" style="color:#fff">dashboard/index.html</a>.
+        Outlet names use the Merdeka Pharmacy pattern. Original Indonesian files stay in
+        <code>source/</code>.
+      </p>
+      <div class="refs">
+        <span><i class="swatch" style="background:#1C4173"></i> Brand blue #1C4173</span>
+        <span><i class="swatch" style="background:#EB6001"></i> Brand orange #EB6001</span>
+        <span><i class="swatch" style="background:#DA6665"></i> Brand rose #DA6665</span>
+        <a href="/KIMIA_FARMA_SALES_DASHBOARD.pdf" target="_blank">Open previous dashboard PDF</a>
+        <a href="/designs/previous_dashboard.png" target="_blank">Previous dashboard image</a>
+        <a href="/designs/index.html">Design picker (this page)</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="note">
+      <strong>What the research says.</strong>
+      Kimia Farma’s live site and Brandfetch palette are deep corporate blue with orange accents
+      (not green). Your 2023 PDF already used that navy + orange language.
+      2025–2026 BI trends favor one accent, high information density, less card decoration,
+      and optional dark-first analytics themes. Reply with a number <strong>1–5</strong> and I will rebuild only that design.
+    </div>
+
+    <div class="picker" id="picker"></div>
+
+    <section class="stage">
+      <div class="stage-bar">
+        <div>
+          <h3 id="stage-title">Design 1 · Brand Classic</h3>
+          <p id="stage-blurb"></p>
+        </div>
+        <div class="badge" id="stage-badge">Reply: 1</div>
+      </div>
+      <div class="preview-shell">
+        <div class="mock" id="mock"></div>
+      </div>
+      <div class="verdict" id="stage-verdict"></div>
+    </section>
+
+    <section class="map">
+      <h3>English rename plan (applied after you choose)</h3>
+      <table>
+        <thead>
+          <tr><th>Current</th><th>International English</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>APOTEK MERDEKA</td><td>Merdeka Pharmacy</td></tr>
+          <tr><td>APOTEK TAPAK</td><td>Tapak Pharmacy</td></tr>
+          <tr><td>APOTEK MAJA</td><td>Maja Pharmacy</td></tr>
+          <tr><td>APOTEK SINAR JAYA</td><td>Sinar Jaya Pharmacy</td></tr>
+          <tr><td>APOTEK SAHABAT</td><td>Sahabat Pharmacy</td></tr>
+          <tr><td>KLINIK SAHABAT</td><td>Sahabat Clinic</td></tr>
+          <tr><td>KLINIK GM</td><td>GM Clinic</td></tr>
+          <tr><td>KLINIK DR. ANDRI</td><td>Dr. Andri Clinic</td></tr>
+          <tr><td>Apotek / Klinik</td><td>Pharmacy / Clinic</td></tr>
+          <tr><td>Cabang, Angka penjualan, DUS, BOTOL, KAPSUL</td><td>Branch, Sales volume, Box, Bottle, Capsule</td></tr>
+          <tr><td>data_penjualan.csv, data_pelanggan.csv, data_barang.csv</td><td>sales.csv, customers.csv, products.csv</td></tr>
+          <tr><td>DDL_*.sql, SQL Aggregate *.sql, Result_Aggregate_*.csv</td><td>schema_*.sql, aggregate_*.sql, aggregate_*.csv</td></tr>
+          <tr><td>ETIKAL, OGB &amp; PH (product lines)</td><td>Ethical, OGB &amp; PH (kept as industry terms, with English labels)</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const DESIGNS = [
+      {
+        id: 1,
+        name: "Brand Classic",
+        trend: "Faithful to your 2023 PDF + official KF colors",
+        blurb: "Navy KPI strip, orange ranking bars, blue trend bars. Closest to the portfolio PDF recruiters already associate with this project.",
+        verdict: "Best if you want the remake to feel like an upgraded version of the original internship dashboard.",
+        chips: ["#F4F7FB", "#FFFFFF", "#1C4173", "#EB6001", "#9AA8BC"],
+        theme: {
+          page: "#E8EEF6",
+          top: "#FFFFFF",
+          ink: "#14233A",
+          muted: "#5C6B82",
+          brand: "#1C4173",
+          accent: "#EB6001",
+          kpiBg: "#1C4173",
+          kpiInk: "#FFFFFF",
+          panel: "#FFFFFF",
+          track: "#E4EAF3",
+          logoBg: "#FFC107",
+          logoInk: "#1C4173",
+          filterBg: "#FFFFFF",
+          filterLine: "#CDD6E4",
+          c1: "#1C4173",
+          c2: "#4E6F9A",
+          c3: "#A8B7CB",
+          stripe: "#FFF1E6"
+        }
+      },
+      {
+        id: 2,
+        name: "Brand Soft",
+        trend: "Corporate brand, modern whitespace",
+        blurb: "Same KF blue/orange, but softer surfaces, lighter KPI cards, and orange used only for emphasis. Reads more like a 2026 product analytics page.",
+        verdict: "Best balance of brand recognition and a fresher CV look without going dark.",
+        chips: ["#F7F9FC", "#FFFFFF", "#1C4173", "#EB6001", "#D9E3F0"],
+        theme: {
+          page: "#F3F6FB",
+          top: "#F8FBFF",
+          ink: "#1A2740",
+          muted: "#66758C",
+          brand: "#1C4173",
+          accent: "#EB6001",
+          kpiBg: "#FFFFFF",
+          kpiInk: "#1C4173",
+          panel: "#FFFFFF",
+          track: "#E7EDF6",
+          logoBg: "#1C4173",
+          logoInk: "#FFFFFF",
+          filterBg: "#FFFFFF",
+          filterLine: "#D5DEEB",
+          c1: "#1C4173",
+          c2: "#EB6001",
+          c3: "#8FA3BF",
+          stripe: "#F7FAFD"
+        }
+      },
+      {
+        id: 3,
+        name: "Dark Command",
+        trend: "2026 dark-first analytics",
+        blurb: "Charcoal canvas, KF blue as the primary data color, orange only for the peak day and top rank. Signals modern BI tooling on an international CV.",
+        verdict: "Best if you want the portfolio piece to look like a current analytics product, not a 2023 report export.",
+        chips: ["#0B1220", "#121A2B", "#4F7EC8", "#EB6001", "#9BB0D0"],
+        theme: {
+          page: "#0B1220",
+          top: "#121A2B",
+          ink: "#E7EEF8",
+          muted: "#9AA8BD",
+          brand: "#4F7EC8",
+          accent: "#EB6001",
+          kpiBg: "#162033",
+          kpiInk: "#E7EEF8",
+          panel: "#121A2B",
+          track: "#243247",
+          logoBg: "#EB6001",
+          logoInk: "#FFFFFF",
+          filterBg: "#182338",
+          filterLine: "#2C3D57",
+          c1: "#4F7EC8",
+          c2: "#EB6001",
+          c3: "#7F93B0",
+          stripe: "#182338"
+        }
+      },
+      {
+        id: 4,
+        name: "Clinical Density",
+        trend: "Neutral canvas + one accent (60-30-10)",
+        blurb: "Near-white healthcare UI. Almost all charts in KF blue. Orange reserved for interactive filters and the single peak highlight. Dense, low-decoration, BI-native.",
+        verdict: "Best if you want a serious healthcare-analyst look with maximum clarity and minimal brand theatrics.",
+        chips: ["#EEF1F4", "#FCFCFD", "#1C4173", "#EB6001", "#6B7785"],
+        theme: {
+          page: "#EBEFF3",
+          top: "#FCFCFD",
+          ink: "#1B2430",
+          muted: "#66717F",
+          brand: "#1C4173",
+          accent: "#EB6001",
+          kpiBg: "#FCFCFD",
+          kpiInk: "#1B2430",
+          panel: "#FCFCFD",
+          track: "#E3E8EE",
+          logoBg: "#1C4173",
+          logoInk: "#FFFFFF",
+          filterBg: "#FFFFFF",
+          filterLine: "#D5DCE5",
+          c1: "#1C4173",
+          c2: "#3E5F8C",
+          c3: "#8FA0B5",
+          stripe: "#F5F7FA"
+        }
+      },
+      {
+        id: 5,
+        name: "Retail Pulse",
+        trend: "Pharmacy retail energy",
+        blurb: "White retail canvas with orange as the main chart color (as in your old customer/product bars) and blue locked to header/KPIs. Feels closer to Kimia Farma’s storefront than a boardroom deck.",
+        verdict: "Best if you want the piece to feel commercial and product-facing, with the brand orange doing the storytelling.",
+        chips: ["#F6F7F9", "#FFFFFF", "#102A4F", "#EB6001", "#F2C7A3"],
+        theme: {
+          page: "#F2F4F7",
+          top: "#102A4F",
+          ink: "#FFFFFF",
+          muted: "#C5D0E0",
+          brand: "#FFFFFF",
+          accent: "#EB6001",
+          kpiBg: "#16345F",
+          kpiInk: "#FFFFFF",
+          panel: "#FFFFFF",
+          track: "#F0E4D8",
+          logoBg: "#EB6001",
+          logoInk: "#FFFFFF",
+          filterBg: "#1B3C6B",
+          filterLine: "#2B4F80",
+          c1: "#EB6001",
+          c2: "#1C4173",
+          c3: "#F0A36A",
+          stripe: "#FFF7F0",
+          panelInk: "#1A2740",
+          panelMuted: "#66758C"
+        }
+      }
+    ];
+
+    const heights = [34, 26, 14, 72, 8, 54, 38, 80, 28, 92, 18];
+    const customers = [
+      ["Merdeka Pharmacy", 100],
+      ["Tapak Pharmacy", 61],
+      ["Sahabat Clinic", 34],
+      ["GM Clinic", 32],
+      ["Sinar Jaya Pharmacy", 31]
+    ];
+    const products = [
+      ["Acyclovir Box", 100],
+      ["Ergotamine Caffeine", 57],
+      ["Chlorpromazine 100 mg", 54],
+      ["Alerine Coated Tablet", 50],
+      ["Ambroxol HC", 50]
+    ];
+
+    function el(tag, attrs={}, ...kids) {
+      const node = document.createElement(tag);
+      Object.entries(attrs).forEach(([k,v]) => {
+        if (k === "style" && typeof v === "object") Object.assign(node.style, v);
+        else if (k.startsWith("on") && typeof v === "function") node.addEventListener(k.slice(2).toLowerCase(), v);
+        else if (v !== false && v != null) node.setAttribute(k, v === true ? "" : v);
+      });
+      kids.flat().forEach((kid) => {
+        if (kid == null || kid === false) return;
+        node.append(kid.nodeType ? kid : document.createTextNode(kid));
+      });
+      return node;
+    }
+
+    function renderMock(design) {
+      const t = design.theme;
+      const panelInk = t.panelInk || t.ink;
+      const panelMuted = t.panelMuted || t.muted;
+      const mock = document.getElementById("mock");
+      mock.replaceChildren();
+      mock.style.background = t.page;
+      mock.style.color = panelInk;
+
+      const top = el("div", { class: "mock-top", style: { background: t.top, color: t.ink, borderBottom: "1px solid " + t.filterLine } },
+        el("div", { class: "brand-mark", style: { color: t.brand } },
+          el("div", { class: "logo-dot", style: { background: t.logoBg, color: t.logoInk } }, "KF"),
+          el("div", {},
+            el("div", { style: { fontSize: "1.05rem" } }, "Kimia Farma"),
+            el("div", { style: { fontSize: ".75rem", color: t.muted, fontWeight: "600" } }, "Sales Dashboard")
+          )
+        ),
+        el("div", { class: "filter-pill", style: { background: t.filterBg, borderColor: t.filterLine, color: t.ink } }, "Brand ▾ All brands")
+      );
+
+      const kpis = el("div", { class: "kpis", style: { background: t.filterLine } },
+        ...[
+          ["Total sales revenue (IDR)", "90.637.700"],
+          ["Invoices", "28"],
+          ["Purchases", "132"],
+          ["Products sold", "2.237"]
+        ].map(([label, value]) => el("div", { class: "kpi", style: { background: t.kpiBg, color: t.kpiInk } },
+          el("div", { class: "label" }, label),
+          el("div", { class: "value" }, value)
+        ))
+      );
+
+      const trend = el("div", { class: "panel", style: { background: t.panel, color: panelInk, border: "1px solid " + t.filterLine } },
+        el("h4", {}, "How are the sales trending?"),
+        el("div", { class: "bars-v" },
+          ...heights.map((h, i) => el("span", {
+            style: {
+              height: h + "%",
+              background: i === 9 ? t.accent : t.brand
+            }
+          }))
+        )
+      );
+
+      const cust = el("div", { class: "panel", style: { background: t.panel, color: panelInk, border: "1px solid " + t.filterLine } },
+        el("h4", {}, "Which customer has the most purchases?"),
+        el("div", { class: "bars-h" },
+          ...customers.map(([name, w], i) => el("div", { class: "row" },
+            el("b", {}, name),
+            el("div", { class: "track", style: { background: t.track } },
+              el("i", { style: { width: w + "%", background: i === 0 ? t.accent : (design.id === 5 ? t.accent : t.brand) } })
+            ),
+            el("span", { style: { color: panelMuted, textAlign: "right" } }, w === 100 ? "30.0M" : (w * 0.3).toFixed(1) + "M")
+          ))
+        )
+      );
+
+      const prod = el("div", { class: "panel", style: { background: t.panel, color: panelInk, border: "1px solid " + t.filterLine } },
+        el("h4", {}, "What is our top product?"),
+        el("div", { class: "bars-h" },
+          ...products.map(([name, w], i) => el("div", { class: "row" },
+            el("b", {}, name),
+            el("div", { class: "track", style: { background: t.track } },
+              el("i", { style: { width: w + "%", background: design.id === 1 || design.id === 5 ? t.accent : t.brand } })
+            ),
+            el("span", { style: { color: panelMuted, textAlign: "right" } }, w === 100 ? "21.0M" : (w * 0.21).toFixed(1) + "M")
+          ))
+        )
+      );
+
+      const pack = el("div", { class: "panel", style: { background: t.panel, color: panelInk, border: "1px solid " + t.filterLine } },
+        el("h4", {}, "Products sold by unit"),
+        el("div", { class: "donut-row", style: { "--c1": t.c1, "--c2": t.c2, "--c3": t.c3 } },
+          el("div", { class: "donut" }),
+          el("div", { class: "legend" },
+            el("div", {}, el("span", {}, el("i", { class: "dot", style: { background: t.c1 } }), "Tablet"), el("b", {}, "37.9%")),
+            el("div", {}, el("span", {}, el("i", { class: "dot", style: { background: t.c2 } }), "Bottle"), el("b", {}, "34.5%")),
+            el("div", {}, el("span", {}, el("i", { class: "dot", style: { background: t.c3 } }), "Box"), el("b", {}, "27.6%"))
+          )
+        )
+      );
+
+      const table = el("div", { class: "panel", style: { background: t.panel, color: panelInk, border: "1px solid " + t.filterLine, gridColumn: "1 / -1" } },
+        el("h4", {}, "Total revenue of each customer"),
+        el("table", { class: "table" },
+          el("thead", {}, el("tr", { style: { background: t.stripe } },
+            el("th", {}, "Customer"), el("th", {}, "Branch"), el("th", { class: "num" }, "Grand total")
+          )),
+          el("tbody", {},
+            el("tr", {}, el("td", {}, "Merdeka Pharmacy"), el("td", {}, "Bandung"), el("td", { class: "num" }, "30.030.900")),
+            el("tr", { style: { background: t.stripe } }, el("td", {}, "Tapak Pharmacy"), el("td", {}, "Aceh"), el("td", { class: "num" }, "18.330.100")),
+            el("tr", {}, el("td", {}, "Sahabat Clinic"), el("td", {}, "Tangerang"), el("td", { class: "num" }, "10.167.000")),
+            el("tr", { style: { background: t.stripe } }, el("td", {}, "GM Clinic"), el("td", {}, "Jakarta"), el("td", { class: "num" }, "9.469.900"))
+          )
+        )
+      );
+
+      const grid = el("div", { class: "grid" }, trend, cust, prod, pack, table);
+      mock.append(top, kpis, grid);
+    }
+
+    let active = 1;
+    const picker = document.getElementById("picker");
+    DESIGNS.forEach((design) => {
+      const button = el("button", {
+        class: "pick",
+        type: "button",
+        "aria-pressed": design.id === active,
+        id: "pick-" + design.id,
+        onclick: () => select(design.id)
+      },
+        el("div", { class: "num" }, "Design " + design.id),
+        el("h2", {}, design.name),
+        el("p", {}, design.trend),
+        el("div", { class: "chips" }, ...design.chips.map((c) => el("i", { class: "chip", style: { background: c } })))
+      );
+      picker.append(button);
+    });
+
+    function select(id) {
+      active = id;
+      const design = DESIGNS.find((d) => d.id === id);
+      document.querySelectorAll(".pick").forEach((node) => {
+        node.setAttribute("aria-pressed", String(node.id === "pick-" + id));
+      });
+      document.getElementById("stage-title").textContent = "Design " + design.id + " · " + design.name;
+      document.getElementById("stage-blurb").textContent = design.blurb;
+      document.getElementById("stage-badge").textContent = "Reply: " + design.id;
+      const verdict = document.getElementById("stage-verdict");
+      verdict.textContent = design.verdict;
+      verdict.style.background = design.theme.stripe;
+      verdict.style.color = design.theme.panelInk || design.theme.ink;
+      renderMock(design);
+    }
+
+    // Prefer serving the local artifact copy if available via static server root.
+    const boot = Number(new URLSearchParams(location.search).get("d") || 1);
+    select([1,2,3,4,5].includes(boot) ? boot : 1);
+  </script>
+</body>
+</html>
