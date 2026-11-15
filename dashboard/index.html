@@ -79,62 +79,64 @@
       </article>
     </section>
 
+    <section class="card card-trend">
+      <h2>How are the sales trending?</h2>
+      <p class="hint">Each bar is one day. Days with no invoice stay in the row.</p>
+      <div class="trend-scroll">
+        <div class="trend" id="trend"></div>
+      </div>
+    </section>
+
     <div class="layout-cols">
-      <div class="col">
-        <section class="card">
-          <h2>How are the sales trending?</h2>
-          <p class="hint">Each bar is one day. Days with no invoice stay in the row.</p>
-          <div class="trend-scroll">
-            <div class="trend" id="trend"></div>
-          </div>
-        </section>
-        <section class="card">
-          <h2>What is our top product?</h2>
-          <p class="hint">Ranked by revenue. Click a product to filter.</p>
-          <div id="products"></div>
-        </section>
-      </div>
-      <div class="col">
-        <section class="card">
-          <h2>Which customer has the most purchases?</h2>
-          <p class="hint">Outlet name, summed across customer ids. Click a row to filter.</p>
-          <div id="customers"></div>
-        </section>
-        <section class="card">
-          <h2>Products sold by unit</h2>
-          <div class="toggles">
-            <div class="toggle">
-              <span>Measure</span>
-              <div class="seg" role="group" aria-label="Mix measure">
-                <button type="button" data-measure="revenue" aria-pressed="true">Revenue</button>
-                <button type="button" data-measure="units">Units</button>
-                <button type="button" data-measure="lines">Lines</button>
-              </div>
-            </div>
-            <div class="toggle">
-              <span>Group by</span>
-              <div class="seg" role="group" aria-label="Packaging source">
-                <button type="button" data-pack="unit" aria-pressed="true">Unit sold</button>
-                <button type="button" data-pack="master">Master packaging</button>
-              </div>
+      <section class="card">
+        <h2>What is our top product?</h2>
+        <p class="hint">Ranked by revenue. Click a product to filter.</p>
+        <div id="products"></div>
+      </section>
+      <section class="card">
+        <h2>Which customer has the most purchases?</h2>
+        <p class="hint">Outlet name, summed across customer ids. Click a row to filter.</p>
+        <div id="customers"></div>
+      </section>
+    </div>
+
+    <div class="layout-cols layout-mix">
+      <section class="card">
+        <h2>Products sold by unit</h2>
+        <div class="toggles">
+          <div class="toggle">
+            <span>Measure</span>
+            <div class="seg" role="group" aria-label="Mix measure">
+              <button type="button" data-measure="revenue" aria-pressed="true">Revenue</button>
+              <button type="button" data-measure="units">Units</button>
+              <button type="button" data-measure="lines">Lines</button>
             </div>
           </div>
-          <p class="hint" id="pack-hint"></p>
-          <div class="mix">
-            <div class="donut-wrap">
-              <svg id="donut" viewBox="0 0 160 160" role="img" aria-label="Packaging mix"></svg>
-              <div class="donut-center">
-                <strong id="donut-value">–</strong>
-                <span id="donut-caption">Revenue</span>
-              </div>
+          <div class="toggle">
+            <span>Group by</span>
+            <div class="seg" role="group" aria-label="Packaging source">
+              <button type="button" data-pack="unit" aria-pressed="true">Unit sold</button>
+              <button type="button" data-pack="master">Master packaging</button>
             </div>
-            <ul class="legend" id="legend"></ul>
           </div>
-          <h3>Product line</h3>
-          <p class="hint">Click a line to filter.</p>
-          <div id="lines"></div>
-        </section>
-      </div>
+        </div>
+        <p class="hint" id="pack-hint"></p>
+        <div class="mix">
+          <div class="donut-wrap">
+            <svg id="donut" viewBox="0 0 160 160" role="img" aria-label="Packaging mix"></svg>
+            <div class="donut-center">
+              <strong id="donut-value">–</strong>
+              <span id="donut-caption">Revenue</span>
+            </div>
+          </div>
+          <ul class="legend" id="legend"></ul>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Product line</h2>
+        <p class="hint">Click a line to filter.</p>
+        <div id="lines"></div>
+      </section>
     </div>
 
     <div class="layout layout-stack">
