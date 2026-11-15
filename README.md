@@ -6,6 +6,8 @@ The charts below use the sample dataset provided for that internship program.
 
 Live dashboard: [cesinata.github.io/kimia-farma-analysis/dashboard](https://cesinata.github.io/kimia-farma-analysis/dashboard/index.html)
 
+Interactive original (Brand filter, hovers, Indonesian labels): [dashboard/previous.html](https://cesinata.github.io/kimia-farma-analysis/dashboard/previous.html)
+
 ## Before and after
 
 <table>
