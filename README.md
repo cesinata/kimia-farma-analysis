@@ -8,13 +8,13 @@ I took the program's sales sample from raw tables through joins and aggregates, 
 
 <table>
   <tr>
-    <td align="center" width="50%">
-      <img src="designs/readme_before.png" alt="Original 2023 Data Studio dashboard" width="360" /><br />
-      <sub>Original internship dashboard (Data Studio export)</sub>
+    <td align="center" valign="top" width="50%">
+      <img src="designs/readme_before.png" alt="Original internship dashboard" width="420" /><br />
+      <sub>Original internship dashboard</sub>
     </td>
-    <td align="center" width="50%">
-      <img src="designs/readme_after.png" alt="Rebuilt Brand Classic dashboard" width="360" /><br />
-      <sub>Rebuilt portfolio dashboard</sub>
+    <td align="center" valign="top" width="50%">
+      <img src="designs/readme_after.png" alt="Rebuilt dashboard" width="420" /><br />
+      <sub>Rebuilt dashboard</sub>
     </td>
   </tr>
 </table>
