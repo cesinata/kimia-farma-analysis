@@ -18,10 +18,10 @@
           <h1>Sales Dashboard</h1>
         </div>
       </div>
-      <a class="ghost" href="../DATA_STUDIO.md">Publish free in Data Studio</a>
+      <a class="ghost" href="previous.html">Original internship version</a>
     </div>
     <div class="wrap lede-wrap">
-      <p class="lede">Sale lines from 20 Jan 2022 to 2 Feb 2022. The 2023 report read those dates backwards, so the trend ran out to 2031. This page keeps every invoice.</p>
+      <p class="lede">Sale lines from 20 Jan 2022 to 2 Feb 2022. The first report read those dates backwards, so the trend ran out to 2031. This page keeps every invoice.</p>
     </div>
   </header>
 
@@ -79,61 +79,62 @@
       </article>
     </section>
 
-    <div class="layout">
-      <section class="card">
-        <h2>How are the sales trending?</h2>
-        <p class="hint">Each bar is one day. Days with no invoice stay in the row.</p>
-        <div class="trend-scroll">
-          <div class="trend" id="trend"></div>
-        </div>
-      </section>
-      <section class="card">
-        <h2>Which customer has the most purchases?</h2>
-        <p class="hint">Outlet name, summed across customer ids. Click a row to filter.</p>
-        <div id="customers"></div>
-      </section>
-    </div>
-
-    <div class="layout">
-      <section class="card">
-        <h2>What is our top product?</h2>
-        <p class="hint">Ranked by revenue. Click a product to filter.</p>
-        <div id="products"></div>
-      </section>
-      <section class="card">
-        <h2>Products sold by unit</h2>
-        <div class="toggles">
-          <div class="toggle">
-            <span>Measure</span>
-            <div class="seg" role="group" aria-label="Mix measure">
-              <button type="button" data-measure="revenue" aria-pressed="true">Revenue</button>
-              <button type="button" data-measure="units">Units</button>
-              <button type="button" data-measure="lines">Lines</button>
+    <div class="layout-cols">
+      <div class="col">
+        <section class="card">
+          <h2>How are the sales trending?</h2>
+          <p class="hint">Each bar is one day. Days with no invoice stay in the row.</p>
+          <div class="trend-scroll">
+            <div class="trend" id="trend"></div>
+          </div>
+        </section>
+        <section class="card">
+          <h2>What is our top product?</h2>
+          <p class="hint">Ranked by revenue. Click a product to filter.</p>
+          <div id="products"></div>
+        </section>
+      </div>
+      <div class="col">
+        <section class="card">
+          <h2>Which customer has the most purchases?</h2>
+          <p class="hint">Outlet name, summed across customer ids. Click a row to filter.</p>
+          <div id="customers"></div>
+        </section>
+        <section class="card">
+          <h2>Products sold by unit</h2>
+          <div class="toggles">
+            <div class="toggle">
+              <span>Measure</span>
+              <div class="seg" role="group" aria-label="Mix measure">
+                <button type="button" data-measure="revenue" aria-pressed="true">Revenue</button>
+                <button type="button" data-measure="units">Units</button>
+                <button type="button" data-measure="lines">Lines</button>
+              </div>
+            </div>
+            <div class="toggle">
+              <span>Group by</span>
+              <div class="seg" role="group" aria-label="Packaging source">
+                <button type="button" data-pack="unit" aria-pressed="true">Unit sold</button>
+                <button type="button" data-pack="master">Master packaging</button>
+              </div>
             </div>
           </div>
-          <div class="toggle">
-            <span>Group by</span>
-            <div class="seg" role="group" aria-label="Packaging source">
-              <button type="button" data-pack="unit" aria-pressed="true">Unit sold</button>
-              <button type="button" data-pack="master">Master packaging</button>
+          <p class="hint" id="pack-hint"></p>
+          <div class="mix">
+            <div class="donut-wrap">
+              <svg id="donut" viewBox="0 0 160 160" role="img" aria-label="Packaging mix"></svg>
+              <div class="donut-center">
+                <strong id="donut-value">–</strong>
+                <span id="donut-caption">Revenue</span>
+              </div>
             </div>
+            <ul class="legend" id="legend"></ul>
           </div>
-        </div>
-        <p class="hint" id="pack-hint"></p>
-        <div class="mix">
-          <div class="donut-wrap">
-            <svg id="donut" viewBox="0 0 160 160" role="img" aria-label="Packaging mix"></svg>
-            <div class="donut-center">
-              <strong id="donut-value">–</strong>
-              <span id="donut-caption">Revenue</span>
-            </div>
-          </div>
-          <ul class="legend" id="legend"></ul>
-        </div>
-        <h3>Product line</h3>
-        <p class="hint">Click a line to filter.</p>
-        <div id="lines"></div>
-      </section>
+          <h3>Product line</h3>
+          <p class="hint">Click a line to filter.</p>
+          <div id="lines"></div>
+        </section>
+      </div>
     </div>
 
     <div class="layout layout-stack">
@@ -156,7 +157,7 @@
         <li>The invoice query used <code>HAVING COUNT(*) &gt; 1</code>. That dropped IN6089, IN6190, and IN6245: 83 units and Rp 4.755.500. The old “products sold” figure of 2.154 is the total with those three removed. This page keeps them: 2.237 units, Rp 90.637.700, 28 invoices.</li>
         <li>Tramadol Capsule 50 mg and Tetracycline Capsule 250 mg are Capsule on the product master and Tablet on the sales lines. “Unit sold” follows the sales file. “Master packaging” groups those two with Capsule.</li>
         <li>25 customer ids on these invoices belong to 8 outlet names. Totals follow the outlet name. Merdeka Pharmacy in Bandung is still first, at Rp 30.030.900.</li>
-        <li>This dataset comes from a Rakamin × Kimia Farma virtual internship. It was modified for training and is safe to publish.</li>
+        <li>Dataset from a Rakamin virtual internship in collaboration with Kimia Farma.</li>
       </ul>
     </details>
   </main>

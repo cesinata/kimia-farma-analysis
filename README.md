@@ -1,8 +1,8 @@
 # Kimia Farma sales analysis
 
-SQL and dashboard project from a virtual Data Science internship by Rakamin, in collaboration with Kimia Farma.
+As a Big Data Analyst intern in a virtual Data Science internship by Rakamin, in collaboration with Kimia Farma, I worked through the program's sales sample from raw tables to SQL aggregates and an interactive dashboard.
 
-I took the program's sales sample from raw tables through joins and aggregates, then rebuilt the interactive dashboard for a portfolio. The data was modified for training, so it is safe to publish.
+Live dashboard: [cesinata.github.io/kimia-farma-analysis/dashboard](https://cesinata.github.io/kimia-farma-analysis/dashboard/index.html)
 
 ## Before and after
 
@@ -18,8 +18,6 @@ I took the program's sales sample from raw tables through joins and aggregates, 
     </td>
   </tr>
 </table>
-
-Open the new version: [`dashboard/index.html`](dashboard/index.html)
 
 ## What the dashboard answers
 
