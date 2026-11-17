@@ -17,15 +17,11 @@ Interactive original (Brand filter, hovers, Indonesian labels): [dashboard/previ
       <sub>Original internship dashboard</sub>
     </td>
     <td align="center" valign="top" width="50%">
-      <img src="designs/readme_after.png" alt="Rebuilt dashboard" width="420" /><br />
+      <img src="designs/dashboard_new.png" alt="Rebuilt dashboard" width="420" /><br />
       <sub>Rebuilt dashboard</sub>
     </td>
   </tr>
 </table>
-
-<p align="center">
-  <img src="designs/dashboard_new.png" alt="Current Kimia Farma sales performance dashboard" width="900" />
-</p>
 
 ## What the dashboard answers
 
