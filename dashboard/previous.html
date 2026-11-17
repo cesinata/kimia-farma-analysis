@@ -6,89 +6,144 @@
   <title>Original internship dashboard · Kimia Farma</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23ffc107'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='11' font-family='Arial' font-weight='700' fill='%231c4173'%3EKF%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="previous.css">
+  <script src="previous-data.js"></script>
 </head>
 <body>
-  <header class="top">
-    <div class="wrap top-row">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">KF</div>
-        <div>
-          <p class="eyebrow">Rakamin × Kimia Farma virtual internship</p>
-          <h1>Original Sales Dashboard</h1>
-        </div>
-      </div>
+  <div class="page-bar">
+    <div class="page-bar-inner">
+      <p>Interactive HTML remake of the internship Data Studio report. Labels and outlet names stay as in the source files. Dates are read as day/month/year so the trend chart is usable.</p>
       <a class="ghost" href="index.html">Back to rebuilt dashboard</a>
     </div>
-  </header>
+  </div>
 
-  <main class="wrap">
-    <section class="intro">
-      <p>
-        This is the Data Studio dashboard from the internship submission,
-        shown here as exported at the time. Some labels and packaging terms
-        are still in Bahasa Indonesia. The rebuilt page uses corrected dates
-        and keeps every invoice.
-      </p>
+  <div class="studio" id="studio">
+    <header class="studio-top">
+      <div class="kf-logo" aria-label="kimia farma">
+        <svg viewBox="0 0 220 72" role="img" aria-hidden="true">
+          <path d="M18 42c28-34 78-40 118-18 18 10 34 18 52 18" fill="none" stroke="#eb6001" stroke-width="10" stroke-linecap="round"/>
+          <g fill="#eb6001">
+            <circle cx="48" cy="14" r="3.2"/><circle cx="62" cy="10" r="2.6"/><circle cx="76" cy="8" r="2.2"/>
+            <circle cx="90" cy="7" r="2"/><circle cx="104" cy="8" r="1.8"/><circle cx="118" cy="10" r="1.6"/>
+            <circle cx="55" cy="20" r="2"/><circle cx="70" cy="16" r="1.7"/><circle cx="85" cy="14" r="1.5"/>
+          </g>
+          <text x="18" y="62" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="28" font-weight="700" fill="#1c4173">kimia farma</text>
+        </svg>
+      </div>
+      <h1>Sales Dashboard</h1>
+      <div class="brand-filter">
+        <label for="brand">Brand</label>
+        <select id="brand"></select>
+      </div>
+    </header>
+
+    <section class="kpi-strip" aria-label="Totals">
+      <article>
+        <h2>Total Sales Revenue (IDR)</h2>
+        <p id="kpi-revenue">–</p>
+      </article>
+      <article>
+        <h2>Number of Invoices</h2>
+        <p id="kpi-invoices">–</p>
+      </article>
+      <article>
+        <h2>Number of Purchases</h2>
+        <p id="kpi-lines">–</p>
+      </article>
+      <article>
+        <h2>Number of Products Sold</h2>
+        <p id="kpi-units">–</p>
+      </article>
     </section>
 
-    <section class="frame" aria-label="Original dashboard export">
+    <div class="studio-body">
+      <div class="grid-2">
+        <section class="panel">
+          <h2>How are the sales trending?</h2>
+          <div class="chart-frame">
+            <div class="trend" id="trend"></div>
+          </div>
+          <div class="legend-row"><span class="swatch navy"></span> Angka penjualan</div>
+        </section>
+        <section class="panel">
+          <h2>Which customer has the most purchases?</h2>
+          <div class="legend-row tight"><span class="swatch orange"></span> Angka penjualan</div>
+          <div class="hbar-list" id="customers"></div>
+        </section>
+      </div>
+
+      <div class="grid-2">
+        <section class="panel">
+          <h2>What is our top product?</h2>
+          <div class="legend-row tight"><span class="swatch orange"></span> Angka penjualan</div>
+          <div class="hbar-list products" id="products"></div>
+        </section>
+        <section class="panel stack">
+          <div>
+            <h2>Which transaction has the highest number of products purchased?</h2>
+            <div class="table-wrap lavender" id="invoices"></div>
+            <p class="pager" id="invoice-pager"></p>
+          </div>
+          <div>
+            <h2>Total revenue of each customer</h2>
+            <div class="table-wrap peach" id="revenue"></div>
+            <p class="pager" id="revenue-pager"></p>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid-2">
+        <section class="panel donut-panel">
+          <h2>Products Sold by Unit</h2>
+          <div class="donut-row">
+            <div class="donut-wrap">
+              <svg id="donut" viewBox="0 0 160 160" role="img" aria-label="Products sold by unit"></svg>
+            </div>
+            <ul class="unit-legend" id="unit-legend"></ul>
+          </div>
+        </section>
+        <section class="panel note-panel">
+          <h2>About this interactive original</h2>
+          <p>
+            Brand filters the product line (<code>lini</code>) the same way the Data Studio control did.
+            Hover bars and donut slices for values. Outlet names, units (<code>BOTOL</code> / <code>DUS</code> / <code>TABLET</code>),
+            and “Angka penjualan” stay in Bahasa Indonesia.
+          </p>
+          <p class="muted" id="status"></p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <details class="export-block">
+    <summary>Static Data Studio export + glossary</summary>
+    <div class="export-inner">
       <img
         src="../designs/previous_dashboard.png"
-        alt="Original Kimia Farma Sales Dashboard from the internship Data Studio report"
+        alt="Static export of the original Kimia Farma Sales Dashboard"
         width="1688"
         height="2250"
       />
-    </section>
-
-    <section class="glossary">
-      <h2>Indonesian terms on this dashboard</h2>
       <table>
         <thead>
-          <tr>
-            <th>Term</th>
-            <th>Meaning</th>
-          </tr>
+          <tr><th>Term</th><th>Meaning</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Angka penjualan</td>
-            <td>Sales figure / sales volume used in the chart legends</td>
-          </tr>
-          <tr>
-            <td>Apotek</td>
-            <td>Pharmacy</td>
-          </tr>
-          <tr>
-            <td>Klinik</td>
-            <td>Clinic</td>
-          </tr>
-          <tr>
-            <td>Cabang</td>
-            <td>Branch / sales branch city</td>
-          </tr>
-          <tr>
-            <td>BOTOL</td>
-            <td>Bottle</td>
-          </tr>
-          <tr>
-            <td>DUS</td>
-            <td>Box / carton</td>
-          </tr>
-          <tr>
-            <td>TABLET / KAPSUL</td>
-            <td>Tablet / Capsule</td>
-          </tr>
-          <tr>
-            <td>penjualan / pelanggan / barang</td>
-            <td>Sales / customer / product tables in the source data</td>
-          </tr>
+          <tr><td>Angka penjualan</td><td>Purchase count (sale lines) used in the trend, customer, and product charts</td></tr>
+          <tr><td>Apotek</td><td>Pharmacy</td></tr>
+          <tr><td>Klinik</td><td>Clinic</td></tr>
+          <tr><td>Cabang</td><td>Branch / sales branch city</td></tr>
+          <tr><td>BOTOL / DUS / TABLET</td><td>Bottle / box / tablet</td></tr>
+          <tr><td>Brand</td><td>Product line filter (<code>lini</code>: ETIKAL, MARCKS, OGB &amp; PH, …)</td></tr>
         </tbody>
       </table>
-    </section>
-  </main>
+    </div>
+  </details>
 
-  <footer class="wrap foot">
+  <footer class="foot">
     <p><a href="index.html">Open the rebuilt dashboard</a> · <a href="../KIMIA_FARMA_SALES_DASHBOARD.pdf">Download the original PDF export</a></p>
   </footer>
+
+  <div class="tip" id="tip" hidden></div>
+  <script src="previous.js"></script>
 </body>
 </html>

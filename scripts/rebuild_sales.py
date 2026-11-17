@@ -9,6 +9,7 @@ Reads the original Indonesian CSVs in source/, writes:
 - data/customer_totals.csv
 - looker/kimia_farma_sales.csv
 - dashboard/data.js
+- dashboard/previous-data.js   Indonesian labels for the interactive original page
 
 Outlet names keep the Indonesian proper noun and use an English type:
 Merdeka Pharmacy, Sahabat Clinic, and so on.
@@ -177,6 +178,58 @@ def english_sales(rows: list[dict]) -> list[dict]:
     return out
 
 
+def indonesian_previous_rows(
+    sales_rows: list[dict],
+    customer_rows: list[dict],
+    product_rows: list[dict],
+) -> list[dict]:
+    """Sale lines with original Indonesian labels for the interactive original page."""
+    customers = {
+        row["id_customer"]: {
+            "customer_name": row["nama"].strip(),
+            "cabang": row["cabang_sales"].strip(),
+            "group": row["group"].strip(),
+        }
+        for row in customer_rows
+        if (row.get("id_customer") or "").strip()
+    }
+    products = {
+        row["kode_barang"]: {
+            "product_name": row["nama_barang"].strip(),
+            "brand": row["lini"].strip(),
+            "kemasan": row["kemasan"].strip(),
+        }
+        for row in product_rows
+        if (row.get("kode_barang") or "").strip()
+    }
+    out = []
+    for index, row in enumerate(sales_rows, start=1):
+        customer = customers[row["id_customer"]]
+        product = products[row["id_barang"]]
+        quantity = int(row["jumlah_barang"])
+        unit_price = int(row["harga"])
+        out.append(
+            {
+                "sale_id": f"S{index:04d}",
+                "invoice_id": row["id_invoice"],
+                "date": parse_date(row["tanggal"].strip()),
+                "product_id": row["id_barang"],
+                "product_name": product["product_name"],
+                "brand": product["brand"],
+                "unit": row["unit"].strip(),
+                "kemasan": product["kemasan"],
+                "quantity": quantity,
+                "unit_price": unit_price,
+                "line_total": quantity * unit_price,
+                "customer_id": row["id_customer"],
+                "customer_name": customer["customer_name"],
+                "cabang": customer["cabang"],
+                "group": customer["group"],
+            }
+        )
+    return out
+
+
 def read_sql(name: str) -> str:
     text = (SQL / name).read_text(encoding="utf-8").strip()
     return text[:-1].rstrip() if text.endswith(";") else text
@@ -339,9 +392,28 @@ def main() -> None:
         encoding="utf-8",
     )
 
+    previous_rows = indonesian_previous_rows(
+        load_csv(SOURCE / "sales_raw.csv"),
+        load_csv(SOURCE / "customers_raw.csv"),
+        load_csv(SOURCE / "products_raw.csv"),
+    )
+    previous_payload = {
+        "rows": previous_rows,
+        "currency": "IDR",
+        "dateStart": min(row["date"] for row in previous_rows),
+        "dateEnd": max(row["date"] for row in previous_rows),
+    }
+    (DASHBOARD / "previous-data.js").write_text(
+        "window.KIMIA_ORIGINAL = "
+        + json.dumps(previous_payload, ensure_ascii=False, separators=(",", ":"))
+        + ";\n",
+        encoding="utf-8",
+    )
+
     print(f"Wrote English tables under {DATA.relative_to(ROOT)}/")
     print(f"Wrote {LOOKER.relative_to(ROOT)}/kimia_farma_sales.csv ({len(lines)} rows)")
     print(f"Wrote {DASHBOARD.relative_to(ROOT)}/data.js")
+    print(f"Wrote {DASHBOARD.relative_to(ROOT)}/previous-data.js ({len(previous_rows)} rows)")
     print(
         "Revenue Rp {:,} · {} invoices · {} units".format(
             sum(row["line_total"] for row in lines),
