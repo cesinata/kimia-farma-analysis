@@ -7,7 +7,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23eb6001'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='11' font-family='Arial' font-weight='700' fill='%231c4173'%3EKF%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Serif+4:ital,opsz,wght@1,8..60,600;1,8..60,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="data.js"></script>
 </head>
@@ -15,17 +15,13 @@
   <header class="top">
     <div class="wrap top-inner">
       <div class="brand-block">
-        <div class="kf-mark" aria-label="kimia farma">
-          <svg viewBox="0 0 220 72" role="img" aria-hidden="true">
-            <path d="M18 42c28-34 78-40 118-18 18 10 34 18 52 18" fill="none" stroke="#eb6001" stroke-width="10" stroke-linecap="round"/>
-            <g fill="#eb6001">
-              <circle cx="48" cy="14" r="3.2"/><circle cx="62" cy="10" r="2.6"/><circle cx="76" cy="8" r="2.2"/>
-              <circle cx="90" cy="7" r="2"/><circle cx="104" cy="8" r="1.8"/><circle cx="118" cy="10" r="1.6"/>
-              <circle cx="55" cy="20" r="2"/><circle cx="70" cy="16" r="1.7"/><circle cx="85" cy="14" r="1.5"/>
-            </g>
-            <text x="18" y="62" font-family="'Source Serif 4', Georgia, serif" font-style="italic" font-size="28" font-weight="700" fill="#1c4173">kimia farma</text>
-          </svg>
-        </div>
+        <img
+          class="kf-logo"
+          src="kimia-farma-logo.png"
+          alt="kimia farma"
+          width="220"
+          height="78"
+        />
         <div class="title-block">
           <h1>Sales Performance Dashboard</h1>
           <p class="subtitle">Kimia Farma · Rakamin Virtual Internship</p>
@@ -74,19 +70,28 @@
       </article>
     </section>
 
-    <div class="layout-main">
-      <section class="card card-trend">
-        <h2>Daily sales</h2>
-        <p class="hint">Each bar is one day. Peak day is highlighted.</p>
-        <div class="trend-scroll">
-          <div class="trend" id="trend"></div>
-        </div>
-      </section>
+    <section class="card card-trend">
+      <h2>Daily sales</h2>
+      <p class="hint">Each bar is one day. Peak day is highlighted.</p>
+      <div class="trend-scroll">
+        <div class="trend" id="trend"></div>
+      </div>
+    </section>
+
+    <div class="layout-cols">
       <section class="card">
         <h2>Top products</h2>
         <p class="hint">Ranked by revenue. Click to filter.</p>
         <div id="products"></div>
       </section>
+      <section class="card">
+        <h2>Top customers</h2>
+        <p class="hint">Outlet totals. Click to filter.</p>
+        <div id="customers"></div>
+      </section>
+    </div>
+
+    <div class="layout-cols layout-mix">
       <section class="card card-mix">
         <h2>Packaging mix</h2>
         <div class="toggles compact">
@@ -112,42 +117,30 @@
           <ul class="legend" id="legend"></ul>
         </div>
       </section>
+      <section class="card">
+        <h2>Product line</h2>
+        <p class="hint">Click a line to filter.</p>
+        <div id="lines"></div>
+      </section>
     </div>
 
-    <div class="layout-bottom">
-      <section class="card">
-        <h2>Top customers</h2>
-        <p class="hint">Outlet totals. Click to filter.</p>
-        <div id="customers"></div>
-      </section>
-      <section class="card">
-        <h2>Invoices</h2>
-        <p class="hint">Ranked by units. Highlighted row has the most units.</p>
-        <div class="table-wrap" id="invoices"></div>
-      </section>
-    </div>
+    <section class="card card-invoices">
+      <h2>Invoices</h2>
+      <p class="hint">Ranked by units. Highlighted row has the most units.</p>
+      <div class="table-wrap" id="invoices"></div>
+    </section>
 
     <details class="notes">
-      <summary>Notes and product line detail</summary>
-      <div class="notes-grid">
-        <div>
-          <h3>Product line</h3>
-          <p class="hint">Click a line to filter.</p>
-          <div id="lines"></div>
-        </div>
-        <div>
-          <h3>Channel split</h3>
-          <div class="channel-card" aria-label="Channel split">
-            <div class="channel-bar" id="channel-bar"></div>
-            <div class="channel-legend" id="channel-legend"></div>
-          </div>
-          <ul class="note-list">
-            <li>Source dates are day/month/year. <code>30/01/22</code> is 30 January 2022.</li>
-            <li>All 28 invoices kept (old report dropped 3 with <code>HAVING COUNT(*) &gt; 1</code>).</li>
-            <li>Totals: Rp 90.637.700 · 2.237 units · 8 outlets.</li>
-          </ul>
-        </div>
+      <summary>What changed from the 2023 Data Studio report</summary>
+      <div class="channel-card" aria-label="Channel split">
+        <div class="channel-bar" id="channel-bar"></div>
+        <div class="channel-legend" id="channel-legend"></div>
       </div>
+      <ul class="note-list">
+        <li>Source dates are day/month/year. <code>30/01/22</code> is 30 January 2022.</li>
+        <li>All 28 invoices kept (old report dropped 3 with <code>HAVING COUNT(*) &gt; 1</code>).</li>
+        <li>Totals: Rp 90.637.700 · 2.237 units · 8 outlets.</li>
+      </ul>
     </details>
 
     <div id="answers" class="sr-only" aria-hidden="true">

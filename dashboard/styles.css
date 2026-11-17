@@ -57,10 +57,11 @@ button, select { font: inherit; color: inherit; }
   min-width: 0;
 }
 
-.kf-mark svg {
+.kf-logo {
   width: 168px;
   height: auto;
   display: block;
+  flex: none;
 }
 
 .title-block {
@@ -264,20 +265,24 @@ main { padding: 18px 0 20px; }
 .kpi-hero .kpi-sub { color: rgba(255, 255, 255, 0.78); }
 .kpi-hero p { color: #fff; }
 
-.layout-main {
+.card-trend {
+  margin-top: 14px;
+}
+
+.layout-cols {
   display: grid;
-  grid-template-columns: 1.35fr 1fr 0.95fr;
+  grid-template-columns: 1.1fr 1fr;
   gap: 14px;
   margin-top: 14px;
   align-items: start;
 }
 
-.layout-bottom {
-  display: grid;
-  grid-template-columns: 0.95fr 1.35fr;
-  gap: 14px;
+.layout-mix {
+  grid-template-columns: 1.05fr 0.95fr;
+}
+
+.card-invoices {
   margin-top: 14px;
-  align-items: start;
 }
 
 .card {
@@ -604,18 +609,6 @@ tr.is-max {
   color: var(--brand);
 }
 
-.notes-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin-top: 12px;
-}
-
-.notes h3 {
-  color: var(--brand);
-  font-size: 0.95rem;
-}
-
 .channel-card {
   margin-top: 10px;
   padding: 0;
@@ -685,9 +678,8 @@ tr.is-max {
   }
   .header-art { width: min(100%, 420px); }
   .kpis { grid-template-columns: 1fr 1fr; }
-  .layout-main,
-  .layout-bottom,
-  .notes-grid { grid-template-columns: 1fr; }
+  .layout-cols,
+  .layout-mix { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
@@ -696,5 +688,6 @@ tr.is-max {
   .mix { grid-template-columns: 1fr; justify-items: center; }
   .filters-label { width: 100%; }
   .reset { width: 100%; }
-  .kf-mark svg { width: 140px; }
+  .kf-logo { width: 132px; }
+  .title-block h1 { white-space: normal; }
 }

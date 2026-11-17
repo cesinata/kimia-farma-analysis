@@ -534,9 +534,9 @@
     answers(rows);
     renderTrend(rowsFor("day"));
 
-    const outlets = group(rowsFor("customer"), (row) => row.customer_name)
-      .sort((a, b) => b.revenue - a.revenue)
-      .slice(0, 5);
+    const outlets = group(rowsFor("customer"), (row) => row.customer_name).sort(
+      (a, b) => b.revenue - a.revenue
+    );
     renderBars(document.getElementById("customers"), outlets, {
       measure: "revenue",
       id: (bucket) => "customer-" + slug(bucket.key),
@@ -548,9 +548,9 @@
       onClick: (bucket) => toggle("customer", bucket.key),
     });
 
-    const products = group(rowsFor("product"), (row) => row.product_id)
-      .sort((a, b) => b.revenue - a.revenue)
-      .slice(0, 6);
+    const products = group(rowsFor("product"), (row) => row.product_id).sort(
+      (a, b) => b.revenue - a.revenue
+    );
     renderBars(document.getElementById("products"), products, {
       measure: "revenue",
       id: (bucket) => "product-" + slug(bucket.key),

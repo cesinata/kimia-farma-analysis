@@ -23,6 +23,10 @@ Interactive original (Brand filter, hovers, Indonesian labels): [dashboard/previ
   </tr>
 </table>
 
+<p align="center">
+  <img src="designs/dashboard_new.png" alt="Current Kimia Farma sales performance dashboard" width="900" />
+</p>
+
 ## What the dashboard answers
 
 - Which outlet spent the most? Merdeka Pharmacy (Bandung), Rp 30.030.900
