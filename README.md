@@ -1,56 +1,65 @@
-# Analyzing Kimia Farma Sales Trends with SQL and an Interactive Dashboard
+# Kimia Farma sales analysis
 
-Portfolio rebuild of a Big Data Analyst internship project: sales for Kimia Farma outlets over a short window, processed end to end from raw tables into SQL aggregates and a dashboard.
+As a Big Data Analyst intern in a virtual Data Science internship by Rakamin, in collaboration with Kimia Farma, I worked through the program sales sample from raw tables to SQL aggregates and an interactive dashboard.
 
-## Dashboard
+The charts below use the sample dataset provided for that internship program.
 
-Open [`dashboard/index.html`](dashboard/index.html).
+Live dashboard: [cesinata.github.io/kimia-farma-analysis/dashboard](https://cesinata.github.io/kimia-farma-analysis/dashboard/index.html)
 
-Design direction: **Brand Classic** — Kimia Farma navy `#1C4173` and orange `#EB6001`, matching the 2023 report and the company brand.
+Interactive original (Brand filter, hovers, Indonesian labels): [dashboard/previous.html](https://cesinata.github.io/kimia-farma-analysis/dashboard/previous.html)
 
-To publish the same numbers on free Google Data Studio, see [`DATA_STUDIO.md`](DATA_STUDIO.md) and upload [`looker/kimia_farma_sales.csv`](looker/kimia_farma_sales.csv).
+## Before and after
 
-Rebuild English datasets from the original Indonesian source files:
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <img src="designs/readme_before.png" alt="Original internship dashboard" width="420" /><br />
+      <sub>Original internship dashboard</sub>
+    </td>
+    <td align="center" valign="top" width="50%">
+      <img src="designs/readme_after.png" alt="Rebuilt dashboard" width="420" /><br />
+      <sub>Rebuilt dashboard</sub>
+    </td>
+  </tr>
+</table>
+
+## What the dashboard answers
+
+- Which outlet spent the most? Merdeka Pharmacy (Bandung), Rp 30.030.900
+- How did sales move over time? Peak on 1 Feb 2022 at Rp 21.434.400
+- What is the top product? Acyclovir Box, Rp 21.024.000
+- Which invoice moved the most units? IN6028, 386 units
+
+Totals with every invoice kept: **Rp 90.637.700** revenue, **28** invoices, **2.237** units.
+
+## Pipeline
+
+1. Load sales, customers, and products
+2. Join into one sale-line table (`sql/01_sale_lines.sql`)
+3. Aggregate by invoice and by outlet (`sql/02_invoice_totals.sql`, `sql/03_customer_totals.sql`)
+4. Chart the results in the dashboard
+
+Working tables: [`data/`](data/). Program source files: [`source/`](source/).
 
 ```bash
 python3 scripts/rebuild_sales.py
 ```
 
-## Data model
+## Fixes found while rebuilding
 
-Three tables:
+- Sale dates are day/month/year. `30/01/22` is 30 January 2022. The first report treated it as year/month/day, so the trend ran into 2031.
+- The first invoice query used `HAVING COUNT(*) > 1` and dropped three real invoices (83 units). The old "products sold" number of 2.154 was that reduced total.
 
-- `sales` — invoices / sale lines
-- `customers` — outlets
-- `products` — medicines
+## If this were rebuilt in Data Studio
 
-English working copies live in [`data/`](data/). The original Indonesian internship files are preserved in [`source/`](source/).
+I did not rebuild the hosted Data Studio report here because of time. At a high level, these are the main steps:
 
-SQL:
+1. Sign in at [datastudio.google.com](https://datastudio.google.com/) (formerly Looker Studio)
+2. Create a data source and upload [`looker/kimia_farma_sales.csv`](looker/kimia_farma_sales.csv) (or Google Sheets)
+3. Set `date` to Date type
+4. Build scorecards for revenue, invoices, purchases, and units sold
+5. Add a date column chart, outlet and product bar charts, a packaging pie, and customer / invoice tables
+6. Use Kimia Farma navy `#1C4173` and orange `#EB6001`
+7. Share the report as view-only for the portfolio
 
-- [`sql/schema_sales.sql`](sql/schema_sales.sql), [`sql/schema_customers.sql`](sql/schema_customers.sql), [`sql/schema_products.sql`](sql/schema_products.sql)
-- [`sql/01_sale_lines.sql`](sql/01_sale_lines.sql) — join for each sale line
-- [`sql/02_invoice_totals.sql`](sql/02_invoice_totals.sql) — units and revenue per invoice
-- [`sql/03_customer_totals.sql`](sql/03_customer_totals.sql) — revenue per outlet
-
-![EER Diagram](EER%20Diagram.png)
-
-## Corrections vs the 2023 report
-
-- Dates in the raw sales file are day/month/year. `30/01/22` is 30 January 2022. The old report read it as 22 January 2030, so the trend ran from 2001 to 2031.
-- The 2023 invoice query used `HAVING COUNT(*) > 1` and dropped invoices IN6089, IN6190, and IN6245 (83 units, Rp 4.755.500). The old “products sold” scorecard of 2.154 is that reduced total. This rebuild keeps every invoice: **Rp 90.637.700**, **2.237** units, **28** invoices.
-- Labels, packaging, channels, and file names are English for an international CV. Outlet proper names stay as Merdeka Pharmacy, Tapak Pharmacy, Sahabat Clinic, and so on.
-
-The previous public Data Studio link is no longer available. Data Studio (formerly Looker Studio) is still free for a personal report.
-
-## English naming
-
-| Indonesian source | English in this repo |
-| --- | --- |
-| APOTEK MERDEKA | Merdeka Pharmacy |
-| APOTEK TAPAK | Tapak Pharmacy |
-| KLINIK SAHABAT | Sahabat Clinic |
-| DUS / BOTOL / KAPSUL | Box / Bottle / Capsule |
-| Apotek / Klinik | Pharmacy / Clinic |
-| data_penjualan.csv | data/sales.csv |
-| Cabang | Branch |
+More detail lives in [`DATA_STUDIO.md`](DATA_STUDIO.md) if I pick this up later.

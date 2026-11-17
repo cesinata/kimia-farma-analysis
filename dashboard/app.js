@@ -30,7 +30,6 @@
   };
   const view = { measure: "revenue", packaging: "unit" };
   const invoiceSort = { key: "quantity", dir: -1 };
-  const customerSort = { key: "revenue", dir: -1 };
   const productName = new Map(DATA.map((row) => [row.product_id, row.product_name]));
 
   function formatInt(value) {
@@ -209,13 +208,14 @@
     const max = Math.max(...buckets.map((bucket) => bucket[options.measure]));
     const list = document.createElement("div");
     list.className = "hlist";
-    buckets.forEach((bucket) => {
+    buckets.forEach((bucket, index) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "hrow";
       button.id = options.id(bucket);
       const selected = options.selected(bucket);
       if (selected) button.classList.add("is-on");
+      if (index === 0) button.classList.add("is-top");
       if (options.dim && options.dim() && !selected) button.classList.add("is-dim");
       button.setAttribute("aria-pressed", String(selected));
       const name = document.createElement("span");
@@ -506,10 +506,25 @@
     const rows = rowsFor(null);
     const revenue = sum(rows, (row) => row.line_total);
     const invoices = new Set(rows.map((row) => row.invoice_id));
+    const units = sum(rows, (row) => row.quantity);
+    const outletNames = new Set(rows.map((row) => row.customer_name));
+    const branches = new Set(rows.map((row) => row.branch));
     document.getElementById("kpi-revenue").textContent = rows.length ? formatRp(revenue) : "–";
     document.getElementById("kpi-invoices").textContent = rows.length ? formatInt(invoices.size) : "–";
-    document.getElementById("kpi-units").textContent = rows.length ? formatInt(sum(rows, (row) => row.quantity)) : "–";
-    document.getElementById("kpi-lines").textContent = rows.length ? formatInt(rows.length) : "–";
+    document.getElementById("kpi-units").textContent = rows.length ? formatInt(units) : "–";
+    document.getElementById("kpi-outlets").textContent = rows.length ? formatInt(outletNames.size) : "–";
+    document.getElementById("kpi-revenue-sub").textContent = rows.length
+      ? formatInt(rows.length) + " sale lines in view"
+      : "No matching sales";
+    document.getElementById("kpi-invoices-sub").textContent = rows.length && invoices.size
+      ? "avg " + formatRp(Math.round(revenue / invoices.size)) + " each"
+      : "";
+    document.getElementById("kpi-units-sub").textContent = rows.length && invoices.size
+      ? (units / invoices.size).toFixed(1) + " per invoice"
+      : "";
+    document.getElementById("kpi-outlets-sub").textContent = rows.length
+      ? "across " + formatInt(branches.size) + (branches.size === 1 ? " branch" : " branches")
+      : "";
     document.getElementById("status").textContent = rows.length
       ? "Showing " + formatInt(rows.length) + " sale lines across " + formatInt(invoices.size) + " invoices."
       : "No sale lines match these filters.";
@@ -519,7 +534,9 @@
     answers(rows);
     renderTrend(rowsFor("day"));
 
-    const outlets = group(rowsFor("customer"), (row) => row.customer_name).sort((a, b) => b.revenue - a.revenue);
+    const outlets = group(rowsFor("customer"), (row) => row.customer_name)
+      .sort((a, b) => b.revenue - a.revenue)
+      .slice(0, 5);
     renderBars(document.getElementById("customers"), outlets, {
       measure: "revenue",
       id: (bucket) => "customer-" + slug(bucket.key),
@@ -531,7 +548,9 @@
       onClick: (bucket) => toggle("customer", bucket.key),
     });
 
-    const products = group(rowsFor("product"), (row) => row.product_id).sort((a, b) => b.revenue - a.revenue);
+    const products = group(rowsFor("product"), (row) => row.product_id)
+      .sort((a, b) => b.revenue - a.revenue)
+      .slice(0, 6);
     renderBars(document.getElementById("products"), products, {
       measure: "revenue",
       id: (bucket) => "product-" + slug(bucket.key),
@@ -607,41 +626,6 @@
       invoiceRows,
       invoiceSort,
       (row) => row.quantity === maxUnits
-    );
-
-    const customerRows = group(rows, (row) => row.customer_name).map((bucket) => ({
-      customer_name: bucket.key,
-      branch: only(bucket.branches),
-      channel: only(bucket.channels),
-      ids: bucket.customers.size,
-      invoices: bucket.invoices.size,
-      quantity: bucket.quantity,
-      revenue: bucket.revenue,
-    }));
-    renderTable(
-      document.getElementById("customer-table"),
-      [
-        {
-          key: "customer_name",
-          label: "Customer",
-          cell: (row) => {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "linkish";
-            button.textContent = row.customer_name;
-            button.addEventListener("click", () => toggle("customer", row.customer_name));
-            return button;
-          },
-        },
-        { key: "branch", label: "Branch", cell: (row) => row.branch },
-        { key: "channel", label: "Channel", cell: (row) => row.channel },
-        { key: "ids", label: "IDs", numeric: true, cell: (row) => formatInt(row.ids) },
-        { key: "invoices", label: "Invoices", numeric: true, cell: (row) => formatInt(row.invoices) },
-        { key: "quantity", label: "Units", numeric: true, cell: (row) => formatInt(row.quantity) },
-        { key: "revenue", label: "Revenue", numeric: true, cell: (row) => formatRp(row.revenue) },
-      ],
-      customerRows,
-      customerSort
     );
 
     document.getElementById("foot-note").textContent =
